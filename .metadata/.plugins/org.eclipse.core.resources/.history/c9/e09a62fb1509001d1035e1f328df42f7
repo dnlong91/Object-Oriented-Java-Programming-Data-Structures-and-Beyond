@@ -83,6 +83,6 @@ public class HelloWorld extends PApplet {
 	public void draw() {
 		// So far we only draw map1...
 		map1.draw();
-		//map2.draw();
+		map2.draw();
 	}
 }

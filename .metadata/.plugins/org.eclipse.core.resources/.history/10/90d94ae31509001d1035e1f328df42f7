@@ -40,7 +40,7 @@ public class HelloWorld extends PApplet {
 		                      // The OPENGL argument indicates to use the 
 		                      // Processing library's 2D drawing
 		                      // You'll learn more about processing in Module 3
-		size(800, 600, P2D);
+		size(800, 600, OPENGL);
 
 		// This sets the background color for the Applet.  
 		// Play around with these numbers and see what happens!
@@ -83,6 +83,6 @@ public class HelloWorld extends PApplet {
 	public void draw() {
 		// So far we only draw map1...
 		map1.draw();
-		//map2.draw();
+		map2.draw();
 	}
 }

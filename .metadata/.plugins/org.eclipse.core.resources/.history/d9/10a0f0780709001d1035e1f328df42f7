@@ -40,15 +40,14 @@ public class HelloWorld extends PApplet {
 		                      // The OPENGL argument indicates to use the 
 		                      // Processing library's 2D drawing
 		                      // You'll learn more about processing in Module 3
-		size(800, 600, P2D);
+		size(800, 600);
 
 		// This sets the background color for the Applet.  
 		// Play around with these numbers and see what happens!
 		this.background(200, 200, 200);
 		
 		// Select a map provider
-		//AbstractMapProvider provider = new Google.GoogleTerrainProvider();
-		AbstractMapProvider provider = new Microsoft.HybridProvider();
+		AbstractMapProvider provider = new Google.GoogleTerrainProvider();
 		// Set a zoom level
 		int zoomLevel = 10;
 		
@@ -69,12 +68,14 @@ public class HelloWorld extends PApplet {
 		// Note if you are working offline you must use the MBTilesMapProvider
 		
 		// Create map1
-		map1 = new UnfoldingMap(this, 50, 50, 250, 500, provider);
+		//map1 = new UnfoldingMap(this, 50, 50, 350, 500, provider);
+		map1 = new UnfoldingMap(this, 500, 0, 350, 500, new Microsoft.HybridProvider());
 		map1.zoomAndPanTo(zoomLevel, new Location(32.9f, -117.2f)); // The next line zooms in and centers the map at 32.9 (latitude) and -117.2 (longitude)
 		MapUtils.createDefaultEventDispatcher(this, map1); // This line makes the map interactive
 		
 		// Create map2 
-		map2 = new UnfoldingMap(this, 350, 50, 250, 500, provider);
+		//map2 = new UnfoldingMap(this, 50, 50, 350, 500, provider);
+		map2 = new UnfoldingMap(this, 500, 0, 350, 500, new Microsoft.HybridProvider());
 		map2.zoomAndPanTo(zoomLevel, new Location(32.7f, -96.8f));
 		MapUtils.createDefaultEventDispatcher(this, map2);
 	}
@@ -82,7 +83,8 @@ public class HelloWorld extends PApplet {
 	/** Draw the Applet window.  */
 	public void draw() {
 		// So far we only draw map1...
+		// TODO: Add code so that both maps are displayed
 		map1.draw();
-		//map2.draw();
+		map2.draw();
 	}
 }
