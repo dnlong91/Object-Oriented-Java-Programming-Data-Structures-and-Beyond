@@ -17,6 +17,7 @@ import de.fhpotsdam.unfolding.geo.Location;
 import de.fhpotsdam.unfolding.marker.SimplePointMarker;
 import de.fhpotsdam.unfolding.providers.Google;
 import de.fhpotsdam.unfolding.providers.MBTilesMapProvider;
+import de.fhpotsdam.unfolding.providers.Microsoft;
 import de.fhpotsdam.unfolding.providers.OpenStreetMap;
 import de.fhpotsdam.unfolding.utils.MapUtils;
 
@@ -53,10 +54,12 @@ public class EarthquakeCityMapDemo extends PApplet {
 
 	
 	public void setup() {
-		size(950, 600, OPENGL);
+		//size(950, 600, OPENGL);
+		size(950, 600);
 
 		// Assume online
-		map = new UnfoldingMap(this, 200, 50, 700, 500, new Google.GoogleMapProvider());
+		//map = new UnfoldingMap(this, 200, 50, 700, 500, new Google.GoogleMapProvider());
+		map = new UnfoldingMap(this, 200, 50, 700, 500, new Microsoft.HybridProvider());
 //		map = new UnfoldingMap(this, 200, 50, 700, 500, new OpenStreetMap.OpenStreetMapProvider() );
 //	    map = new UnfoldingMap(this, 200, 50, 650, 600, new MBTilesMapProvider(mbTilesString));
 

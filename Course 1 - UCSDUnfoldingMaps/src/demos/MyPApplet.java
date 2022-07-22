@@ -28,7 +28,7 @@ public class MyPApplet extends PApplet{
 		image(img, 0, 0);			//display image 
 		int[] color = sunColorSec(second());		//calculate color code for sun
 		fill(color[0],color[1],color[2]);	//set sun color
-		ellipse(width/4,height/5,width/4,height/5);	//draw sun
+		ellipse(width/4,height/5,width/4,height/5);	//draw sun dynamically
 		
 	}
 	
@@ -39,7 +39,9 @@ public class MyPApplet extends PApplet{
 		// Scale the brightness of the yellow based on the seconds.  0 seconds 
 		// is bright yellow.  30 seconds is black.
 		float diffFrom30 = Math.abs(30-seconds);
-		
+		// Calculate the ratio in terms of how far around the minute are we
+		// ratio is a number between 0 and 1. 
+		// ratio is used to scale the red and green values of yellow to create a color that's either very dark or very light
 		float ratio = diffFrom30/30;
 		rgb[0] = (int)(255*ratio);
 		rgb[1] = (int)(255*ratio);
@@ -54,5 +56,3 @@ public class MyPApplet extends PApplet{
 		PApplet.main(new String[] {"--present", "MyPApplet"});
 	}
 }
-
-
