@@ -132,7 +132,7 @@ public class EarthquakeCityMap extends PApplet {
 		fill(0);
 		textAlign(LEFT, CENTER);
 		textSize(12);
-		text("Earthquake Key", 780, 25);
+		text("Earthquake Key", 770, 28);
 		// City Marker symbol
 		fill(color(235, 71, 71));
 		triangle(780, 65, 785, 55, 790, 65);
@@ -151,16 +151,22 @@ public class EarthquakeCityMap extends PApplet {
 		// Deep color
 		fill(color(224, 36, 1));
 		ellipse(785, 195, 11, 11);
+		// Past hour symbol
+		fill(color(255, 255, 255));
+		ellipse(785, 215, 11, 11);
+		line(785 - 7, 215 - 7, 785 + 7, 215 + 7);
+		line(785 + 7, 215 - 7, 785 - 7, 215 + 7);
 		
 		// Key titles
 		fill(0, 0, 0);
 		text("City Marker", 800, 60);
 		text("Land Quake", 800, 80);
 		text("Ocean Quake", 800, 100);
-		text("Size ~ Magnitude", 780, 120);
+		text("Size ~ Magnitude", 770, 123);
 		text("Shallow", 800, 155);
 		text("Intermediate", 800, 175);
 		text("Deep", 800, 195);
+		text("Past hour", 800, 215);
 	}
 	
 	// Checks whether this quake occurred on land.  If it did, it sets the 
