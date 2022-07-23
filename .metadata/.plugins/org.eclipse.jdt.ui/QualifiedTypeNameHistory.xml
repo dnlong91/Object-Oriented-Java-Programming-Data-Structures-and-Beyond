@@ -3,4 +3,6 @@
     <fullyQualifiedTypeName name="de.fhpotsdam.unfolding.providers.Microsoft"/>
     <fullyQualifiedTypeName name="processing.core.PApplet"/>
     <fullyQualifiedTypeName name="de.fhpotsdam.unfolding.providers.Google.GoogleMapProvider"/>
+    <fullyQualifiedTypeName name="java.awt.Color"/>
+    <fullyQualifiedTypeName name="processing.core.PConstants"/>
 </qualifiedTypeNameHistroy>

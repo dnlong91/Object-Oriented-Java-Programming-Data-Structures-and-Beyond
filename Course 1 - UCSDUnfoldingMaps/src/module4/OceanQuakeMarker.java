@@ -1,6 +1,7 @@
 package module4;
 
 import de.fhpotsdam.unfolding.data.PointFeature;
+import processing.core.PConstants;
 import processing.core.PGraphics;
 
 /** Implements a visual marker for ocean earthquakes on an earthquake map
@@ -18,7 +19,6 @@ public class OceanQuakeMarker extends EarthquakeMarker {
 		isOnLand = false;
 	}
 	
-
 	@Override
 	public void drawEarthquake(PGraphics pg, float x, float y) {
 		// Drawing a centered square for Ocean earthquakes
@@ -29,12 +29,12 @@ public class OceanQuakeMarker extends EarthquakeMarker {
 		// HINT: Notice the radius variable in the EarthquakeMarker class
 		// and how it is set in the EarthquakeMarker constructor
 		
-		// TODO: Implement this method
-		
+		// Save previous drawing style
+		pg.pushStyle();
+		// Draw shape
+		pg.rectMode(PConstants.CENTER);
+		pg.rect(x, y, super.radius, super.radius);
+		// Restore previous drawing style
+		pg.popStyle();
 	}
-	
-
-
-	
-
 }
