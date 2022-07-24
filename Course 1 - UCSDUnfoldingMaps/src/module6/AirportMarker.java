@@ -26,8 +26,6 @@ public class AirportMarker extends CommonMarker {
 	public void drawMarker(PGraphics pg, float x, float y) {
 		pg.fill(11);
 		pg.ellipse(x, y, 5, 5);
-		
-		
 	}
 
 	@Override
@@ -36,6 +34,11 @@ public class AirportMarker extends CommonMarker {
 		
 		// show routes
 		
+	}
+
+	@Override
+	public void showNearby(PGraphics pg) {
+		// TODO Auto-generated method stub
 		
 	}
 	
