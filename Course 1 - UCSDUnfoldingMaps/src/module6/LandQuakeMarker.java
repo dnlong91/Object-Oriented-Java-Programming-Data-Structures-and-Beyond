@@ -6,20 +6,16 @@ import processing.core.PGraphics;
 /** Implements a visual marker for land earthquakes on an earthquake map
  * 
  * @author UC San Diego Intermediate Software Development MOOC team
- *
+ * @author Ginny Dang
  */
 public class LandQuakeMarker extends EarthquakeMarker {
-	
-	
 	public LandQuakeMarker(PointFeature quake) {
-		
 		// calling EarthquakeMarker constructor
 		super(quake);
 		
 		// setting field in earthquake marker
 		isOnLand = true;
 	}
-
 
 	@Override
 	public void drawEarthquake(PGraphics pg, float x, float y) {
@@ -30,14 +26,10 @@ public class LandQuakeMarker extends EarthquakeMarker {
 		// HINT: Notice the radius variable in the EarthquakeMarker class
 		// and how it is set in the EarthquakeMarker constructor
 		pg.ellipse(x, y, 2*radius, 2*radius);
-		
 	}
 	
-
 	// Get the country the earthquake is in
 	public String getCountry() {
 		return (String) getProperty("country");
 	}
-
-		
 }

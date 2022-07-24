@@ -1,5 +1,7 @@
 package module6;
 
+import java.awt.Color;
+
 import de.fhpotsdam.unfolding.data.PointFeature;
 import processing.core.PConstants;
 import processing.core.PGraphics;
@@ -7,12 +9,9 @@ import processing.core.PGraphics;
 /** Implements a visual marker for earthquakes on an earthquake map
  * 
  * @author UC San Diego Intermediate Software Development MOOC team
- *
+ * @author Ginny Dang
  */
-// TODO: Implement the comparable interface
-public abstract class EarthquakeMarker extends CommonMarker
-{
-	
+public abstract class EarthquakeMarker extends CommonMarker implements Comparable<EarthquakeMarker> {
 	// Did the earthquake occur on land?  This will be set by the subclasses.
 	protected boolean isOnLand;
 
@@ -21,7 +20,6 @@ public abstract class EarthquakeMarker extends CommonMarker
 	// using the thresholds below, or a continuous function
 	// based on magnitude. 
 	protected float radius;
-	
 	
 	// constants for distance
 	protected static final float kmPerMile = 1.6f;
@@ -36,16 +34,16 @@ public abstract class EarthquakeMarker extends CommonMarker
 	/** Greater than or equal to this threshold is a deep depth */
 	public static final float THRESHOLD_DEEP = 300;
 
-	// ADD constants for colors
-
+	// constants for colors
+	private Color shallow = new Color(254, 226, 197);
+	private Color intermediate = new Color(0, 29, 110);
+	private Color deep = new Color(224, 36, 1);
 	
 	// abstract method implemented in derived classes
 	public abstract void drawEarthquake(PGraphics pg, float x, float y);
-		
 	
 	// constructor
-	public EarthquakeMarker (PointFeature feature) 
-	{
+	public EarthquakeMarker (PointFeature feature) {
 		super(feature.getLocation());
 		// Add a radius property and then set the properties
 		java.util.HashMap<String, Object> properties = feature.getProperties();
@@ -55,9 +53,11 @@ public abstract class EarthquakeMarker extends CommonMarker
 		this.radius = 1.75f*getMagnitude();
 	}
 	
-	// TODO: Add the method:
-	// public int compareTo(EarthquakeMarker marker)
-	
+	public int compareTo(EarthquakeMarker marker) {
+		if (this.getMagnitude() < marker.getMagnitude()) { return - 1; }
+		else if (this.getMagnitude() > marker.getMagnitude()) { return 1; }
+		else { return 0; }
+	}
 	
 	// calls abstract method drawEarthquake and then checks age and draws X if needed
 	@Override
@@ -85,17 +85,14 @@ public abstract class EarthquakeMarker extends CommonMarker
 					y+(radius+buffer), 
 					x+radius+buffer, 
 					y-(radius+buffer));
-			
 		}
 		
 		// reset to previous styling
 		pg.popStyle();
-		
 	}
 
 	/** Show the title of the earthquake if this marker is selected */
-	public void showTitle(PGraphics pg, float x, float y)
-	{
+	public void showTitle(PGraphics pg, float x, float y) {
 		String title = getTitle();
 		pg.pushStyle();
 		
@@ -113,7 +110,6 @@ public abstract class EarthquakeMarker extends CommonMarker
 		pg.popStyle();
 		
 	}
-
 	
 	/**
 	 * Return the "threat circle" radius, or distance up to 
@@ -134,23 +130,19 @@ public abstract class EarthquakeMarker extends CommonMarker
 		float depth = getDepth();
 		
 		if (depth < THRESHOLD_INTERMEDIATE) {
-			pg.fill(255, 255, 0);
-		}
-		else if (depth < THRESHOLD_DEEP) {
-			pg.fill(0, 0, 255);
-		}
-		else {
-			pg.fill(255, 0, 0);
+			pg.fill(shallow.getRGB());
+		} else if (depth < THRESHOLD_DEEP) {
+			pg.fill(intermediate.getRGB());
+		} else {
+			pg.fill(deep.getRGB());
 		}
 	}
-	
 	
 	/** toString
 	 * Returns an earthquake marker's string representation
 	 * @return the string representation of an earthquake marker.
 	 */
-	public String toString()
-	{
+	public String toString() {
 		return getTitle();
 	}
 	/*
@@ -167,19 +159,13 @@ public abstract class EarthquakeMarker extends CommonMarker
 	
 	public String getTitle() {
 		return (String) getProperty("title");	
-		
 	}
 	
 	public float getRadius() {
 		return Float.parseFloat(getProperty("radius").toString());
 	}
 	
-	public boolean isOnLand()
-	{
+	public boolean isOnLand() {
 		return isOnLand;
 	}
-	
-
-	
-	
 }

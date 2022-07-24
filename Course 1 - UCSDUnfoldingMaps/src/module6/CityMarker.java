@@ -12,20 +12,17 @@ import processing.core.PGraphics;
  * 
  */
 public class CityMarker extends CommonMarker {
-	
 	public static int TRI_SIZE = 5;  // The size of the triangle marker
 	
 	public CityMarker(Location location) {
 		super(location);
 	}
 	
-	
 	public CityMarker(Feature city) {
 		super(((PointFeature)city).getLocation(), city.getProperties());
 		// Cities have properties: "name" (city name), "country" (country name)
 		// and "population" (population, in millions)
 	}
-	
 	
 	// pg is the graphics object on which you call the graphics
 	// methods.  e.g. pg.fill(255, 0, 0) will set the color to red
@@ -51,8 +48,7 @@ public class CityMarker extends CommonMarker {
 	}
 	
 	/** Show the title of the city if this marker is selected */
-	public void showTitle(PGraphics pg, float x, float y)
-	{
+	public void showTitle(PGraphics pg, float x, float y) {
 		String name = getCity() + " " + getCountry() + " ";
 		String pop = "Pop: " + getPopulation() + " Million";
 		
@@ -70,18 +66,15 @@ public class CityMarker extends CommonMarker {
 		pg.popStyle();
 	}
 	
-	private String getCity()
-	{
+	private String getCity() {
 		return getStringProperty("name");
 	}
 	
-	private String getCountry()
-	{
+	private String getCountry() {
 		return getStringProperty("country");
 	}
 	
-	private float getPopulation()
-	{
+	private float getPopulation() {
 		return Float.parseFloat(getStringProperty("population"));
 	}
 }

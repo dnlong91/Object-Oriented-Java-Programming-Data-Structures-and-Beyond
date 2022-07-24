@@ -7911,3 +7911,6 @@ Binding(COMMAND+SHIFT+T,
 		,,true),null),
 	org.eclipse.ui.defaultAcceleratorConfiguration,
 	org.eclipse.ui.contexts.window,,,system)
+
+!ENTRY org.eclipse.ui 2 2 2022-07-23 22:32:29.115
+!MESSAGE Invalid preference category path: org.eclipse.mylyn.preferencePages.Mylyn (bundle: org.eclipse.mylyn.context.ui, page: org.eclipse.mylyn.context.ui.preferences)
