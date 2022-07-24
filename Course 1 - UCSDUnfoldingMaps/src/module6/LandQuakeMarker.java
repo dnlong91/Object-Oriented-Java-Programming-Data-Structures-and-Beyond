@@ -25,7 +25,7 @@ public class LandQuakeMarker extends EarthquakeMarker {
 		// Simply draw a centered square.
 		// HINT: Notice the radius variable in the EarthquakeMarker class
 		// and how it is set in the EarthquakeMarker constructor
-		pg.ellipse(x, y, 2*radius, 2*radius);
+		pg.ellipse(x, y, radius, radius);
 	}
 	
 	// Get the country the earthquake is in

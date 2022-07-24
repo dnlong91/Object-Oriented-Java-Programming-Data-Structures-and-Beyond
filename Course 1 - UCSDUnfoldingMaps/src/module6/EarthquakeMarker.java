@@ -1,8 +1,11 @@
 package module6;
 
 import java.awt.Color;
+import java.util.ArrayList;
+import java.util.List;
 
 import de.fhpotsdam.unfolding.data.PointFeature;
+import de.fhpotsdam.unfolding.marker.Marker;
 import processing.core.PConstants;
 import processing.core.PGraphics;
 
@@ -106,9 +109,30 @@ public abstract class EarthquakeMarker extends CommonMarker implements Comparabl
 		pg.fill(0);
 		pg.text(title, x + 3 , y +18);
 		
-		
 		pg.popStyle();
+	}
+	
+	public void showNearby(PGraphics pg) {
+		ArrayList<CityMarker> nearbyCities = getNearbyCities();
 		
+		pg.pushStyle();
+		// Box
+		pg.fill(255, 250, 240);
+		pg.rect(750, 300, 200, 35 + nearbyCities.size() * 15 + 28);
+		// Box title
+		pg.fill(0);
+		pg.textAlign(PConstants.LEFT, PConstants.CENTER);
+		pg.textSize(12);
+		pg.text("Total affected cities: " + nearbyCities.size(), 770, 328);
+		// List all the affected cities
+		int initY = 335;
+		for (CityMarker c : nearbyCities) {
+			initY += 15;
+			String title = c.getCity();
+			String country = c.getCountry();
+			pg.text(title + ", " + country, 780, initY);
+		}
+		pg.popStyle();
 	}
 	
 	/**
@@ -167,5 +191,19 @@ public abstract class EarthquakeMarker extends CommonMarker implements Comparabl
 	
 	public boolean isOnLand() {
 		return isOnLand;
+	}
+	
+	private ArrayList<CityMarker> getNearbyCities() {
+		ArrayList<CityMarker> nearbyCities = new ArrayList<CityMarker>();
+		List<Marker> cities = EarthquakeCityMap.getCities();
+		for (Marker m : cities) {
+			CityMarker cm = (CityMarker)m;
+			double dist = cm.getDistanceTo(this.getLocation());
+			double threatRadius = threatCircle();
+			if (dist <= threatRadius) {
+				nearbyCities.add(cm);
+			}
+		}
+		return nearbyCities;
 	}
 }

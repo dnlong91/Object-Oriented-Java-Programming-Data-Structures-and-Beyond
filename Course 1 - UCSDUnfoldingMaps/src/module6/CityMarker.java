@@ -1,15 +1,20 @@
 package module6;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import de.fhpotsdam.unfolding.data.Feature;
 import de.fhpotsdam.unfolding.data.PointFeature;
 import de.fhpotsdam.unfolding.geo.Location;
+import de.fhpotsdam.unfolding.marker.Marker;
 import processing.core.PConstants;
 import processing.core.PGraphics;
 
 /** Implements a visual marker for cities on an earthquake map
  * 
  * @author UC San Diego Intermediate Software Development MOOC team
- * 
+ * @author Ginny Dang
  */
 public class CityMarker extends CommonMarker {
 	public static int TRI_SIZE = 5;  // The size of the triangle marker
@@ -66,15 +71,52 @@ public class CityMarker extends CommonMarker {
 		pg.popStyle();
 	}
 	
-	private String getCity() {
+	public void showNearby(PGraphics pg) {
+		ArrayList<EarthquakeMarker> nearbyEarthquakes = getNearbyEarthquakes();
+		// Sort by magnitude
+		Collections.sort(nearbyEarthquakes);
+		
+		pg.pushStyle();
+		// Box
+		pg.fill(255, 250, 240);
+		pg.rect(750, 300, 430, 35 + nearbyEarthquakes.size() * 15 + 28);
+		// Box title
+		pg.fill(0);
+		pg.textAlign(PConstants.LEFT, PConstants.CENTER);
+		pg.textSize(12);
+		pg.text("Total Nearby earthquakes: " + nearbyEarthquakes.size(), 770, 328);
+		int initY = 335;
+		for (EarthquakeMarker e : nearbyEarthquakes) {
+			initY += 15;
+			String title = e.getTitle();
+			pg.text(title, 780, initY);
+		}
+		pg.popStyle();
+	}
+	
+	public String getCity() {
 		return getStringProperty("name");
 	}
 	
-	private String getCountry() {
+	public String getCountry() {
 		return getStringProperty("country");
 	}
 	
 	private float getPopulation() {
 		return Float.parseFloat(getStringProperty("population"));
+	}
+	
+	private ArrayList<EarthquakeMarker> getNearbyEarthquakes() {
+		ArrayList<EarthquakeMarker> nearbyEarthquakes = new ArrayList<EarthquakeMarker>();
+		List<Marker> earthquakes = EarthquakeCityMap.getQuakes();
+		for (Marker m: earthquakes) {
+			EarthquakeMarker em = (EarthquakeMarker)m;
+			double dist = em.getDistanceTo(this.getLocation());
+			double threatRadius = em.threatCircle();
+			if (dist <= threatRadius) {
+				nearbyEarthquakes.add(em);
+			}
+		}
+		return nearbyEarthquakes;
 	}
 }

@@ -51,9 +51,9 @@ public class EarthquakeCityMap extends PApplet {
 	private UnfoldingMap map;
 	
 	// Markers for each city
-	private List<Marker> cityMarkers;
+	private static List<Marker> cityMarkers;
 	// Markers for each earthquake
-	private List<Marker> quakeMarkers;
+	private static List<Marker> quakeMarkers;
 
 	// A List of country markers
 	private List<Marker> countryMarkers;
@@ -64,12 +64,11 @@ public class EarthquakeCityMap extends PApplet {
 	
 	public void setup() {		
 		// (1) Initializing canvas and map tiles
-		size(950, 700);
+		size(1200, 700);
 		if (offline) {
 		    map = new UnfoldingMap(this, 0, 0, 650, 600, new MBTilesMapProvider(mbTilesString));
 		    earthquakesURL = "2.5_week.atom";  // The same feed, but saved August 7, 2015
-		}
-		else {
+		} else {
 			map = new UnfoldingMap(this, 0, 0, 650, 600, new Microsoft.HybridProvider());
 			// IF YOU WANT TO TEST WITH A LOCAL FILE, uncomment the next line
 		    //earthquakesURL = "2.5_week.atom";
@@ -194,6 +193,7 @@ public class EarthquakeCityMap extends PApplet {
 	public void mouseClicked() {
 		if (lastClicked != null) {
 			unhideMarkers();
+			lastClicked.setClicked(false);
 			lastClicked = null;
 		} else if (lastClicked == null) {
 			checkEarthquakesForClick();
@@ -207,7 +207,7 @@ public class EarthquakeCityMap extends PApplet {
 	// and respond appropriately
 	private void checkCitiesForClick() {
 		if (lastClicked != null) return;
-		// Loop over the earthquake markers to see if one of them is selected
+		// Loop over the city markers to see if one of them is selected
 		for (Marker marker : cityMarkers) {
 			if (!marker.isHidden() && marker.isInside(map, mouseX, mouseY)) {
 				lastClicked = (CommonMarker)marker;
@@ -224,9 +224,10 @@ public class EarthquakeCityMap extends PApplet {
 						quakeMarker.setHidden(true);
 					}
 				}
+				lastClicked.setClicked(true);
 				return;
 			}
-		}		
+		}
 	}
 	
 	// Helper method that will check if an earthquake marker was clicked on
@@ -250,6 +251,7 @@ public class EarthquakeCityMap extends PApplet {
 						mhide.setHidden(true);
 					}
 				}
+				lastClicked.setClicked(true);
 				return;
 			}
 		}
@@ -386,5 +388,13 @@ public class EarthquakeCityMap extends PApplet {
 			return true;
 		}
 		return false;
+	}
+	
+	public static List<Marker> getCities() {
+		return cityMarkers;
+	}
+	
+	public static List<Marker> getQuakes() {
+		return quakeMarkers;
 	}
 }
