@@ -9,7 +9,6 @@ import de.fhpotsdam.unfolding.data.PointFeature;
 import de.fhpotsdam.unfolding.data.ShapeFeature;
 import de.fhpotsdam.unfolding.marker.Marker;
 import de.fhpotsdam.unfolding.marker.SimpleLinesMarker;
-import de.fhpotsdam.unfolding.marker.SimplePointMarker;
 import de.fhpotsdam.unfolding.utils.MapUtils;
 import de.fhpotsdam.unfolding.geo.Location;
 import parsing.ParseFeed;
@@ -22,9 +21,13 @@ import processing.core.PApplet;
  * 
  */
 public class AirportMap extends PApplet {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	UnfoldingMap map;
 	private List<Marker> airportList;
-	List<Marker> routeList;
+	private static List<Marker> routeList;
 	private CommonMarker lastSelected;
 	private CommonMarker lastClicked;
 	
@@ -133,7 +136,6 @@ public class AirportMap extends PApplet {
 		}
 	}
 	
-	// TODO: check for clicked airport
 	// Helper method that will check if an airport marker was clicked on
 	// and respond appropriately
 	private void checkAirportsForClick() {
@@ -171,12 +173,12 @@ public class AirportMap extends PApplet {
 						otherAirport.setHidden(true);
 					}
 				}
+				lastClicked.setClicked(true);
 				return;
 			}
 		}
 	}
 	
-	// TODO: unhide markers
 	// loop over and unhide all markers
 	private void unhideMarkers() {
 		for(Marker marker : airportList) {
@@ -191,5 +193,9 @@ public class AirportMap extends PApplet {
 	public void draw() {
 		background(0);
 		map.draw();
+	}
+	
+	public static List<Marker> getRoutes() {
+		return routeList;
 	}
 }

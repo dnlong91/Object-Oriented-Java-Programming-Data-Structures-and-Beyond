@@ -13,8 +13,6 @@ import processing.core.PApplet;
 import processing.data.XML;
 
 public class ParseFeed {
-
-
 	/*
 	 * This method is to parse a GeoRSS feed corresponding to earthquakes around
 	 * the globe.
@@ -71,13 +69,9 @@ public class ParseFeed {
 						point.putProperty("age", ageStr);
 					}
 				}
-		
-
 			}
-		
 			return features;
 		}
-
 	
 	/*
 	 * Gets location from georss:point tag
@@ -116,7 +110,6 @@ public class ParseFeed {
 		if (strXML != null && strXML.getContent() != null) {
 			str = strXML.getContent();
 		}
-		
 		return str;
 	}
 	
@@ -126,7 +119,6 @@ public class ParseFeed {
 	private static float getFloatVal(XML itemXML, String tagName) {
 		return Float.parseFloat(getStringVal(itemXML, tagName));
 	}
-	
 
 	/*
 	 * This method is to parse a file containing airport information.  
@@ -140,10 +132,9 @@ public class ParseFeed {
 	 */
 	public static List<PointFeature> parseAirports(PApplet p, String fileName) {
 		List<PointFeature> features = new ArrayList<PointFeature>();
-
 		String[] rows = p.loadStrings(fileName);
+		
 		for (String row : rows) {
-			
 			// hot-fix for altitude when lat lon out of place
 			int i = 0;
 			
@@ -162,9 +153,7 @@ public class ParseFeed {
 			point.setId(columns[0]);
 			
 			// get other fields from csv
-			// TODO: add Id property
 			point.addProperty("id", columns[0]);
-			
 			point.addProperty("name", columns[1]);
 			point.putProperty("city", columns[2]);
 			point.putProperty("country", columns[3]);
@@ -183,13 +172,9 @@ public class ParseFeed {
 			
 			features.add(point);
 		}
-
 		return features;
-		
 	}
 	
-	
-
 	/*
 	 * This method is to parse a file containing airport route information.  
 	 * The file and its format can be found: 
@@ -213,24 +198,18 @@ public class ParseFeed {
 			// set id to be OpenFlights identifier for source airport
 			
 			// check that both airports on route have OpenFlights Identifier
-			if(!columns[3].equals("\\N") && !columns[5].equals("\\N")){
+			if(!columns[3].equals("\\N") && !columns[5].equals("\\N") && !columns[2].equals("\\N") && !columns[4].equals("\\N")) {
 				// set "source" property to be OpenFlights identifier for source airport
 				route.putProperty("source", columns[3]);
 				// "destination property" -- OpenFlights identifier
 				route.putProperty("destination", columns[5]);
-				
+				route.putProperty("source-code", columns[2]);
+				route.putProperty("dest-code", columns[4]);
 				routes.add(route);
 			}
 		}
-			
-		
 		return routes;
-		
-		
-		
 	}
-	
-	
 
 	/*
 	 * This method is to parse a file containing life expectancy information from
@@ -269,17 +248,11 @@ public class ParseFeed {
 				// check if value exists for year
 				if(!columns[i].equals("..")) {
 					lifeExpMap.put(columns[3], Float.parseFloat(columns[i]));
-					
 					// break once most recent data is found
 					break;
 				}
 			}
-			
 		}
-
 		return lifeExpMap;
 	}
-	
-	
-
 }
