@@ -6,6 +6,10 @@
 
 - The starter code of the project can be found at https://github.com/cjalvarado/Course1StarterCode
 
+# Proof of Completion
+
+<img src="./certificate.png" width=800>
+
 unfolding_app_template and UC San Diego/Coursera MOOC starter code
 ==================================================================
 
