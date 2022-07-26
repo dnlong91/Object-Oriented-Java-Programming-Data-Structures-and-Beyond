@@ -5,18 +5,18 @@ import java.util.List;
 /** 
  * A naive implementation of the Document abstract class. 
  * @author UC San Diego Intermediate Programming MOOC team
+ * @author Ginny Dang
+ * Date: July 25th, 2022
+ * 
  */
-public class BasicDocument extends Document 
-{
+public class BasicDocument extends Document {
 	/** Create a new BasicDocument object
 	 * 
 	 * @param text The full text of the Document.
 	 */
-	public BasicDocument(String text)
-	{
+	public BasicDocument(String text) {
 		super(text);
 	}
-	
 	
 	/**
 	 * Get the number of words in the document.
@@ -32,11 +32,18 @@ public class BasicDocument extends Document
 	 * @return The number of words in the document.
 	 */
 	@Override
-	public int getNumWords()
-	{
-		//TODO: Implement this method in week 2 according to the comments above.  
-		// See the Module 2 support videos if you need help.
-	    return 0;
+	public int getNumWords() {
+		// Edge case
+	    if (getText().length() == 0) {
+	    	return 0;
+	    }
+	    // Normal cases
+	    List<String> words = getTokens("[a-zA-Z]+");
+//	    for (int i = 0; i < words.size(); i++) {
+//			System.out.println(words.get(i));
+//		}
+//		System.out.println("\n" + words.size());
+        return words.size();
 	}
 	
 	/**
@@ -52,11 +59,18 @@ public class BasicDocument extends Document
 	 * @return The number of sentences in the document.
 	 */
 	@Override
-	public int getNumSentences()
-	{
-	    //TODO: Implement this method.  See the Module 2 support videos 
-        // if you need help.
-        return 0;
+	public int getNumSentences() {
+		// Edge case
+	    if (getText().length() == 0) {
+	    	return 0;
+	    }
+	    // Normal cases
+	    List<String> sentences = getTokens("[^!?.]+");
+//	    for (int i = 0; i < sentences.size(); i++) {
+//			System.out.println(sentences.get(i));
+//		}
+//		System.out.println("\n" + sentences.size());
+        return sentences.size();
 	}
 	
 	/**
@@ -74,21 +88,30 @@ public class BasicDocument extends Document
 	 * @return The number of syllables in the document.
 	 */
 	@Override
-	public int getNumSyllables()
-	{
-	    //TODO: Implement this method in week 2.  See the Module 2 support videos 
-        // if you need help.  And note that there is no need to use a regular
-		// expression for the syllable counting.  We recommend you implement 
-		// the helper function countSyllables in Document.java using a loop, 
-		// and then call it here on each word.
-        return 0;
+	public int getNumSyllables() {
+		// Edge case
+	    if (getText().length() == 0) {
+	    	return 0;
+	    }
+	    // Normal cases
+	    // Gather word only, no special characters, no numbers in each word
+	    String cleanText = getText().replaceAll("[^a-zA-Z0-9]", " ");
+	    String[] words = cleanText.split(" +");
+	    // Get total number of Syllables of the whole text
+	    int syllableCount = 0;
+	    for (int i = 0; i < words.length; i++) {
+	    	if (!words[i].matches(".*\\d.*")) {
+	    		syllableCount += countSyllables(words[i]);
+	    		//System.out.println(words[i]);
+	    		//System.out.println(countSyllables(words[i]));
+	    	}
+	    }
+        return syllableCount;
 	}
-	
 	
 	/* The main method for testing this class. 
 	 * You are encouraged to add your own tests.  */
-	public static void main(String[] args)
-	{
+	public static void main(String[] args) {
 		/* Each of the test cases below uses the method testCase.  The first 
 		 * argument to testCase is a Document object, created with the string shown.
 		 * The next three arguments are the number of syllables, words and sentences 
@@ -112,5 +135,4 @@ public class BasicDocument extends Document
 		testCase(new BasicDocument("Lorem ipsum dolor sit amet, qui ex choro quodsi moderatius, nam dolores explicari forensibus ad."),
 		         32, 15, 1);
 	}
-	
 }
