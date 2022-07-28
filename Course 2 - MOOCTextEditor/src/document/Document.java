@@ -10,7 +10,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public abstract class Document {
-
 	private String text;
 	
 	/** Create a new document from the given text.
@@ -40,71 +39,30 @@ public abstract class Document {
 		return tokens;
 	}
 	
-	/** This is a helper function that returns the number of syllables
-	 * in a word.  You should write this and use it in your 
-	 * BasicDocument class.
-	 * 
-	 * You will probably NOT need to add a countWords or a countSentences 
-	 * method here.  The reason we put countSyllables here because we'll 
-	 * use it again next week when we implement the EfficientDocument class.
-	 * 
-	 * For reasons of efficiency you should not create Matcher or Pattern 
-	 * objects inside this method. Just use a loop to loop through the 
-	 * characters in the string and write your own logic for counting 
-	 * syllables.
-	 * 
-	 * @param word  The word to count the syllables in
-	 * @return The number of syllables in the given word, according to 
-	 * this rule: Each contiguous sequence of one or more vowels is a syllable, 
-	 *       with the following exception: a lone "e" at the end of a word 
-	 *       is not considered a syllable unless the word has no other syllables. 
-	 *       You should consider y a vowel.
-	 */
-	protected int countSyllables(String word) {
-		//System.out.println(word);
+	// This is a helper function that returns the number of syllables
+	// in a word.  You should write this and use it in your 
+	// BasicDocument class.
+	protected static int countSyllables(String word) {
+	    //System.out.print("Counting syllables in " + word + "...");
+		int numSyllables = 0;
+		boolean newSyllable = true;
 		String vowels = "aeiouy";
-		word = word.toLowerCase();
-		int syllableCount = 0; // total number of Syllables of one word
-		int syllableSize = 0;
-		ArrayList<String> syllables = new ArrayList<String>();
-		String syllable = "";
-		// Count all possible syllables
-		for (int i = 0; i < word.length(); i++) {
-			//System.out.println(word.charAt(i));
-			if (vowels.indexOf(word.charAt(i)) != -1) {
-				if (syllableSize == 0) {
-					syllableCount += 1;
-				}
-				syllableSize += 1;
-				syllable += word.charAt(i);
-			} else {
-				if (syllable.length() != 0) {
-					syllables.add(syllable);
-				}
-				syllableSize = 0;
-				syllable = "";
+		char[] cArray = word.toCharArray();
+		for (int i = 0; i < cArray.length; i++) {
+		    if (i == cArray.length-1 && Character.toLowerCase(cArray[i]) == 'e' 
+		    		&& newSyllable && numSyllables > 0) {
+                numSyllables--;
+            }
+		    if (newSyllable && vowels.indexOf(Character.toLowerCase(cArray[i])) >= 0) {
+				newSyllable = false;
+				numSyllables++;
+			}
+			else if (vowels.indexOf(Character.toLowerCase(cArray[i])) < 0) {
+				newSyllable = true;
 			}
 		}
-		if (syllable.length() != 0) {
-			syllables.add(syllable);
-		}
-//		for (int i = 0; i < syllables.size(); i++) {
-//			System.out.println(word + " " + syllables.size());
-//			System.out.println(syllables.get(i));
-//			System.out.println(word.indexOf(syllables.get(i)) +  " " + syllables.get(i));
-//		}
-//		System.out.println("syllableCount " + syllableCount);
-//		System.out.println("syllables.size() " + syllables.size());
-		// Check if the last syllable is a lone 'e'
-		if (syllableCount >= 2) {
-			String lastSyllable = syllables.get(syllables.size() - 1);
-//			System.out.println("lastSyllable " + lastSyllable);
-			if (lastSyllable.equals("e") && word.charAt(word.length() - 1) == 'e') {
-				syllableCount -= 1;
-			}
-		}
-//		System.out.println("final syllableCount " + syllableCount);
-	    return syllableCount;
+		//System.out.println( "found " + numSyllables);
+		return numSyllables;
 	}
 	
 	/** A method for testing
@@ -117,7 +75,7 @@ public abstract class Document {
 	 */
 	public static boolean testCase(Document doc, int syllables, int words, int sentences) {
 		System.out.println("Testing text: ");
-		System.out.print(doc.getText() + "\n....\n");
+		System.out.print(doc.getText() + "\n....");
 		boolean passed = true;
 		int syllFound = doc.getNumSyllables();
 		int wordsFound = doc.getNumWords();
@@ -164,11 +122,8 @@ public abstract class Document {
 	
 	/** return the Flesch readability score of this document */
 	public double getFleschScore() {
-		double fleschScore;
-		double words = (double)this.getNumWords();
-		double sentences = (double)this.getNumSentences();
-		double syllables = (double)this.getNumSyllables();
-		fleschScore = 206.835 - 1.015 * (words / sentences) - 84.6 * (syllables / words);
-	    return fleschScore;
+		double wordCount = (double)getNumWords();
+		return 206.835 - (1.015 * ((wordCount)/getNumSentences())) 
+				- (84.6 * (((double)getNumSyllables())/wordCount));
 	}
 }
