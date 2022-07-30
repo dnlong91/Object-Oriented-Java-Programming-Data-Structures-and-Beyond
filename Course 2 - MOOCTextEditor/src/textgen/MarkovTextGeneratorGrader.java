@@ -61,7 +61,7 @@ public class MarkovTextGeneratorGrader {
             feedback += "Done. ";
 
             found = true;
-            feedback += "\n** Test 6: Seeing if last word is always followed by first word...";
+            feedback += "\n** Test #6: Seeing if last word is always followed by first word...";
             feedback += "Done. ";
 
             feedback += "\n** Test #7: Requesting zero words...";
