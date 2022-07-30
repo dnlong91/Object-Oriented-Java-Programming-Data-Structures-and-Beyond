@@ -19,5 +19,4 @@ public interface Dictionary {
 	
 	/** Return the number of words in the dictionary */
 	public abstract int size();
-	
 }
