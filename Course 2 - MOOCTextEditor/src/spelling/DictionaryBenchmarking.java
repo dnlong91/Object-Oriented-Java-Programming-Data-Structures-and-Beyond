@@ -1,6 +1,5 @@
 package spelling;
 
-
 /** A class for timing the Dictionary Implementations
  * 
  * @author UC San Diego Intermediate Programming MOOC team
@@ -8,10 +7,7 @@ package spelling;
  */
 
 public class DictionaryBenchmarking {
-
-	
 	public static void main(String [] args) {
-
 	    // Run each test more than once to get bigger numbers and less noise.
 	    // You can try playing around with this number.
 	    int trials = 500;
@@ -33,10 +29,7 @@ public class DictionaryBenchmarking {
 		
 		String notInDictionary = "notaword";
 		
-		// TODO: Play around with the numbers above and graph the output to see trends in the data
-		for (int numToCheck = start; numToCheck < numSteps*increment + start; 
-				numToCheck += increment)
-		{
+		for (int numToCheck = start; numToCheck < numSteps*increment + start; numToCheck += increment) {
 			// Time the creation of finding a word that is not in the dictionary.
 			DictionaryLL llDict = new DictionaryLL();
 			DictionaryBST bstDict = new DictionaryBST();
@@ -59,9 +52,6 @@ public class DictionaryBenchmarking {
 			long timeBST = (endTime - startTime);
 			
 			System.out.println(numToCheck + "\t" + timeLL + "\t" + timeBST);
-			
 		}
-	
 	}
-	
 }

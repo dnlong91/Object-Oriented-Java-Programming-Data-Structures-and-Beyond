@@ -4,7 +4,7 @@ import java.util.LinkedList;
 
 /**
  * A class that implements the Dictionary interface using a LinkedList
- *
+ * @author Ginny Dang
  */
 public class DictionaryLL implements Dictionary {
 	private LinkedList<String> dict;
@@ -40,3 +40,5 @@ public class DictionaryLL implements Dictionary {
         return dict.contains(s);
     }
 }
+
+//Run time: O(N)
