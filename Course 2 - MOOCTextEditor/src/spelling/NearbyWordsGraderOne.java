@@ -61,12 +61,11 @@ public class NearbyWordsGraderOne {
                 feedback += i + ", ";
             }
             feedback += "\n";
-            
         } catch (Exception e) {
             out.println("Runtime error: " + e);
             return;
         }
-
+        
         out.println(feedback + "Tests complete. Check that everything looks right.");
         out.close();
     }
