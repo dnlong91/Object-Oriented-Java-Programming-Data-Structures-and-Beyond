@@ -6,13 +6,11 @@ import java.util.List;
 
 public class TrieGrader {
     StringBuilder feedback;
-
-
+    
     public TrieGrader() {
         feedback = new StringBuilder();
     }
-
-
+    
     public static void main(String[] args) {
         TrieGrader g = new TrieGrader();
 
@@ -40,13 +38,11 @@ public class TrieGrader {
         }
 
         StringBuilder feedback = g.getFeedback();
-
-
+        
         out.println(feedback.toString());
         out.close();
     }
-
-
+    
     private void testAddWords(AutoCompleteDictionaryTrie ac) {
         feedback.append( "//TESTING ADDING WORDS (addWord, insert)//");
         appendTestString(1, "Adding first word to dictionary...");
@@ -82,7 +78,6 @@ public class TrieGrader {
         ac.addWord("testbase");
         ac.addWord("testcases");
 
-
         feedback.append("Dict size is " + ac.size() + ".");
 
         // get current size before trying to add duplicate word
@@ -95,7 +90,6 @@ public class TrieGrader {
     }
 
     private void testWordsInOut(AutoCompleteDictionaryTrie ac) {
-
         feedback.append("\n\n\n//TESTING FOR WORDS IN/OUT OF DICTIONARY (isWord)//");
         appendTestString(6,"Checking empty string...");
         // test empty string
@@ -118,13 +112,9 @@ public class TrieGrader {
 
         appendTestString(11, "Testing word with capital letters...");
         feedback.append("'TeSt' in dictionary: " + ac.isWord("TeSt") + ".");
-
-
-
     }
 
     private void testPredictions(AutoCompleteDictionaryTrie ac) {
-
         feedback.append("\n\n\n//TESTING AUTO COMPLETE FUNCTIONALITY (predictCompletions)//");
         List<String> auto = ac.predictCompletions("dog", 3);
 
@@ -163,8 +153,7 @@ public class TrieGrader {
 
         appendTestString(19, "Testing if list contains correct shorter words...");
         feedback.append("Check above output.");
-
-
+        
         appendTestString(20, "Testing for remaining words...");
         partialList = auto.subList(5, auto.size());
 
@@ -176,17 +165,14 @@ public class TrieGrader {
         count = partialList.contains("testing") ? ++count:count;
 
         feedback.append("Out of 'testone', 'testine', 'testell', and 'testing', " + count + " words were found.");
-
     }
-
+    
     private void appendTestString(int num, String description) {
         feedback.append("\n\n** Test #" + num + ": " + description + "\n");
     }
-
+    
     private StringBuilder getFeedback() {
         return this.feedback;
     }
-
-
 }
 
