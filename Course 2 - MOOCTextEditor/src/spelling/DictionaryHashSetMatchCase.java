@@ -13,11 +13,9 @@ import java.util.Scanner;
  */
 public class DictionaryHashSetMatchCase implements Dictionary 
 {
-
     private HashSet<String> words;
 	
-	public DictionaryHashSetMatchCase()
-	{
+	public DictionaryHashSetMatchCase() {
 	    words = new HashSet<String>();
 	}
 	
@@ -26,23 +24,19 @@ public class DictionaryHashSetMatchCase implements Dictionary
      * @return true if the word was added to the dictionary 
      * (it wasn't already there). */
 	@Override
-	public boolean addWord(String word) 
-	{
-		return words.add(word.toLowerCase());
+	public boolean addWord(String word) {
+		return words.add(word);
 	}
 
 	/** Return the number of words in the dictionary */
     @Override
-	public int size()
-	{
+	public int size() {
     	 return words.size();
 	}
 	
 	/** Is this a word according to this dictionary? */
     @Override
 	public boolean isWord(String s) {
-    	return words.contains(s.toLowerCase());
+    	return words.contains(s);
 	}
-	
-   
 }

@@ -102,7 +102,6 @@ public class AutoCompleteDictionaryTrie implements Dictionary, AutoComplete {
      * @return A list containing the up to numCompletions best predictions
      */@Override
      public List<String> predictCompletions(String prefix, int numCompletions) {
-    	 // TODO: Implement this method
     	 // This method should implement the following algorithm:
     	 // 1. Find the stem in the trie. If the stem does not appear in the trie, return an
     	 //    empty list

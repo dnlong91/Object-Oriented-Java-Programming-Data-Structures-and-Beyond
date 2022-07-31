@@ -67,7 +67,10 @@ public class AutoCompleteMatchCase implements Dictionary, AutoComplete {
 	 * described in the videos for this week. */
 	@Override
 	public boolean isWord(String s) {
-	    s = s.toLowerCase();
+		if (!validateCase(s)) {
+			return false;
+		}
+		s = s.toLowerCase();
 	    TrieNode curr = root;
 	    for (int i = 0; i < s.length(); i++) {
 	    	char currChar = s.charAt(i);
@@ -102,7 +105,6 @@ public class AutoCompleteMatchCase implements Dictionary, AutoComplete {
      * @return A list containing the up to numCompletions best predictions
      */@Override
      public List<String> predictCompletions(String prefix, int numCompletions) {
-    	 // TODO: Implement this method
     	 // This method should implement the following algorithm:
     	 // 1. Find the stem in the trie. If the stem does not appear in the trie, return an
     	 //    empty list
@@ -118,6 +120,9 @@ public class AutoCompleteMatchCase implements Dictionary, AutoComplete {
     	 // Return the list of completions
     	 
     	 // Find the stem
+    	 if (!validateCase(prefix)) {
+    		 return Collections.emptyList();
+    	 }
     	 prefix = prefix.toLowerCase();
     	 TrieNode curr = root;
     	 for (int i = 0; i < prefix.length(); i++) {
@@ -146,22 +151,36 @@ public class AutoCompleteMatchCase implements Dictionary, AutoComplete {
  		 return completions;
  	}
     
-	// For debugging
- 	public void printTree() {
- 		printNode(root);
- 	}
- 	
- 	/** Do a pre-order traversal from this node down */
- 	public void printNode(TrieNode curr) {
- 		if (curr == null) 
- 			return;
- 		
- 		System.out.println(curr.getText());
- 		
- 		TrieNode next = null;
- 		for (Character c : curr.getValidNextCharacters()) {
- 			next = curr.getChild(c);
- 			printNode(next);
- 		}
- 	}
+	 // For debugging
+ 	 public void printTree() {
+ 		 printNode(root);
+ 	 }
+ 	 
+ 	 /** Do a pre-order traversal from this node down */
+ 	 public void printNode(TrieNode curr) {
+ 		 if (curr == null) 
+ 			 return;
+ 		 
+ 		 System.out.println(curr.getText());
+ 		 
+ 		 TrieNode next = null;
+ 		 for (Character c : curr.getValidNextCharacters()) {
+ 			 next = curr.getChild(c);
+ 			 printNode(next);
+ 		 }
+ 	 }
+ 	 
+ 	 private boolean validateCase(String word) {
+ 		 if (word.length() == 1 || word.length() == 0) {
+ 			 return true;
+ 		 }
+ 		 if (!word.toUpperCase().equals(word)) {
+ 			 for (int i = 1; i < word.length(); i++) {
+ 				 if (Character.isUpperCase(word.charAt(i))) {
+ 					 return false;
+				 }
+			 }
+		 }
+ 		 return true;
+ 	 }
 }
