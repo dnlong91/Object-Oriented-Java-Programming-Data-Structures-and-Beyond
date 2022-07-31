@@ -35,10 +35,10 @@ public class NearbyWords implements SpellingSuggest {
 		insertions(s, retList, wordsOnly);
 		substitution(s, retList, wordsOnly);
 		deletions(s, retList, wordsOnly);
-		for (String w : retList) {
-			System.out.println(w);
-		}
-		System.out.println("\n" + retList.size());
+//		for (String w : retList) {
+//			System.out.println(w);
+//		}
+//		System.out.println("\n" + retList.size());
 		return retList;
 	}
 	
@@ -125,7 +125,6 @@ public class NearbyWords implements SpellingSuggest {
 	 * @param word The misspelled word
 	 * @param numSuggestions is the maximum number of suggestions to return 
 	 * @return the list of spelling suggestions
-	 * 
 	 * 
 	 * Pseudocode
 	 * Input:  word for which to provide number of spelling suggestions

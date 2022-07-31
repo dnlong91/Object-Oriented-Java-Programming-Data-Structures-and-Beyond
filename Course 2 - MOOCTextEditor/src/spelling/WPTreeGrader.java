@@ -34,9 +34,8 @@ public class WPTreeGrader {
             e.printStackTrace();
             return;
         }
-
+        
         try {
-
             Dictionary dict = new DictionaryHashSet();
             DictionaryLoader.loadDictionary(dict, "data/grader_dict.txt");
             WPTree tree = new WPTree(new NearbyWords(dict)); 
@@ -65,7 +64,7 @@ public class WPTreeGrader {
             out.close();
             return;
         }
-
+        
         out.println(feedback + "Tests complete. Make sure everything looks right.");
         out.close();
     }
