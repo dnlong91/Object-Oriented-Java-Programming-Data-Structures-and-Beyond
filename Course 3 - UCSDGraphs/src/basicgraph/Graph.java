@@ -18,11 +18,11 @@ import util.GraphLoader;
  * Representation of edges is left abstract.
  * 
  * @author UCSD MOOC development team and YOU
+ * @author Ginny Dang
  * 
  */
 
 public abstract class Graph {
-
 	private int numVertices;
 	private int numEdges;
 	//optional association of String labels to vertices 
@@ -36,7 +36,6 @@ public abstract class Graph {
 		numEdges = 0;
 		vertexLabels = null;
 	}
-
 	
 	/**
 	 * Report size of vertex set
@@ -45,7 +44,6 @@ public abstract class Graph {
 	public int getNumVertices() {
 		return numVertices;
 	}
-	
 	
 	/**
 	 * Report size of edge set
@@ -64,8 +62,8 @@ public abstract class Graph {
 	 */
 	public int addVertex() {
 		implementAddVertex();
-		numVertices ++;
-		return (numVertices-1);
+		numVertices++;
+		return (numVertices - 1);
 	}
 	
 	/**
@@ -80,9 +78,9 @@ public abstract class Graph {
 	 * @param w Index of the end point of the edge to be added. 
 	 */
 	public void addEdge(int v , int w) {
-		numEdges ++;
+		numEdges++;
 		if (v < numVertices && w < numVertices) {
-			implementAddEdge(v , w);			
+			implementAddEdge(v, w);			
 		}
 		else {
 			throw new IndexOutOfBoundsException();
@@ -111,18 +109,25 @@ public abstract class Graph {
 	 */
 	public abstract List<Integer> getInNeighbors(int v);
 	
-	
-
 	/** 
 	 * The degree sequence of a graph is a sorted (organized in numerical order 
 	 * from largest to smallest, possibly with repetitions) list of the degrees 
 	 * of the vertices in the graph.
 	 * 
+	 * Remember that the degree of a node includes both its in-degree plus its out-degree. 
+	 * A self-loop will contribute 2 to the degree of the node. 
+	 * The degree sequence needs to be ordered from largest to smallest
+	 * 
 	 * @return The degree sequence of this graph.
 	 */
 	public List<Integer> degreeSequence() {
-		// XXX: Implement in part 1 of week 2
-		return null;
+		List<Integer> degrees = new ArrayList<Integer>();
+		for (int v = 0; v < numVertices; v++) {
+			int numDegrees = getInNeighbors(v).size() + getNeighbors(v).size();
+			degrees.add(numDegrees);
+		}
+		Collections.sort(degrees, Collections.reverseOrder());
+		return degrees;
 	}
 	
 	/**
@@ -149,7 +154,6 @@ public abstract class Graph {
 	 * @return the String
 	 */
 	public abstract String adjacencyString();
-
 	
 	// The next methods implement labeled vertices.
 	// Basic graphs may or may not have labeled vertices.
@@ -160,15 +164,15 @@ public abstract class Graph {
 	 */
 	public void initializeLabels() {
 		vertexLabels = new HashMap<Integer,String>();
-	}	
+	}
+	
 	/**
 	 * Test whether some vertex in the graph is labeled 
 	 * with a given index.
 	 * @param The index being checked
 	 * @return True if there's a vertex in the graph with this index; false otherwise.
 	 */
-	public boolean hasVertex(int v)
-	{
+	public boolean hasVertex(int v) {
 		return v < getNumVertices();
 	}
 	
@@ -178,8 +182,7 @@ public abstract class Graph {
 	 * @param The String label being checked
 	 * @return True if there's a vertex in the graph with this label; false otherwise.
 	 */
-	public boolean hasVertex(String s)
-	{
+	public boolean hasVertex(String s) {
 		return vertexLabels.containsValue(s);
 	}
 	
@@ -189,8 +192,7 @@ public abstract class Graph {
 	 * @param The label to be assigned to this vertex.
 	 */
 	public void addLabel(int v, String s) {
-		if (v < getNumVertices() && !vertexLabels.containsKey(v)) 
-		{
+		if (v < getNumVertices() && !vertexLabels.containsKey(v)) {
 			vertexLabels.put(v, s);
 		}
 		else {
@@ -209,7 +211,7 @@ public abstract class Graph {
 		}
 		else return null;
 	}
-
+	
 	/**
 	 * Report index of vertex with given label.
 	 * (Assume distinct labels for vertices.)
@@ -225,13 +227,10 @@ public abstract class Graph {
 		return -1;
 	}
 	
-
-	
 	/** Main method provided with some basic tests.  */
 	public static void main (String[] args) {
 		GraphLoader.createIntersectionsFile("data/maps/ucsd.map", "data/intersections/ucsd.intersections");
 		
-
 		// For testing of Part 1 functionality
 		// Add your tests here to make sure your degreeSequence method is returning
 		// the correct list, after examining the graphs.
@@ -241,7 +240,15 @@ public abstract class Graph {
 		System.out.println("****");
 		System.out.println("Roads / intersections:");
 		GraphAdjList graphFromFile = new GraphAdjList();
-		GraphLoader.loadRoadMap("data/testdata/simpletest.map", graphFromFile);
+//		GraphLoader.loadRoadMap("data/testdata/simpletest.map", graphFromFile);
+//		GraphLoader.loadRoadMap("data/maps/hollywood_large.map", graphFromFile);
+		GraphLoader.loadRoadMap("data/maps/hollywood_small.map", graphFromFile);
+//		GraphLoader.loadRoadMap("data/maps/new_york.map.map", graphFromFile);
+//		GraphLoader.loadRoadMap("data/maps/newbury_small.map", graphFromFile);
+//		GraphLoader.loadRoadMap("data/maps/newbury_verysmall.map", graphFromFile);
+//		GraphLoader.loadRoadMap("data/maps/san_diego.map", graphFromFile);
+//		GraphLoader.loadRoadMap("data/maps/ucsd.map", graphFromFile);
+//		GraphLoader.loadRoadMap("data/maps/utc.map", graphFromFile);
 		System.out.println(graphFromFile);
 		
 		System.out.println("Observe all degrees are <= 12.");
@@ -262,8 +269,5 @@ public abstract class Graph {
 		// Test your distance2 code here.
 		System.out.println("Testing distance-two methods on sample graphs...");
 		System.out.println("Goal: implement method using two approaches.");
-
-
-		
 	}
 }

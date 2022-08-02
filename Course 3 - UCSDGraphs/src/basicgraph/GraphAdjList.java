@@ -2,6 +2,7 @@ package basicgraph;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -14,11 +15,10 @@ import java.util.Set;
  * Representation of edges via adjacency lists.
  * 
  * @author UCSD MOOC development team and YOU
- *
+ * @author Ginny Dang
+ * 
  */
 public class GraphAdjList extends Graph {
-
-
 	private Map<Integer,ArrayList<Integer>> adjListsMap;
 	
 	/** 
@@ -34,7 +34,7 @@ public class GraphAdjList extends Graph {
 	public void implementAddVertex() {
 		int v = getNumVertices();
 		ArrayList<Integer> neighbors = new ArrayList<Integer>();
-		adjListsMap.put(v,  neighbors);
+		adjListsMap.put(v, neighbors);
 	}
 	
 	/** 
@@ -85,8 +85,7 @@ public class GraphAdjList extends Graph {
 		}
 		return inNeighbors;
 	}
-	 
-
+	
 	/** 
 	 * Implement the abstract method for finding all 
 	 * vertices reachable by two hops from v.
@@ -95,8 +94,13 @@ public class GraphAdjList extends Graph {
 	 * @return List<Integer> a list of indices of vertices.  
 	 */		
 	 public List<Integer> getDistance2(int v) {
-		 // XXX: Implement this method in week 2
-		 return null;
+		 List<Integer> twoHopNeighbors = new ArrayList<Integer>();
+		 List<Integer> oneHopNeighbors = getNeighbors(v);
+		 for (int w : oneHopNeighbors) {
+			 List<Integer> currNeighbors = getNeighbors(w);
+			 twoHopNeighbors.addAll(currNeighbors);
+		 }
+		 return twoHopNeighbors;
 	}
 	
 	/**
@@ -115,8 +119,4 @@ public class GraphAdjList extends Graph {
 		}
 		return s;
 	}
-
-
-
-
 }

@@ -13,9 +13,7 @@ import util.GraphLoader;
  */
 public class GraphGrader {
     private String feedback;
-
     private int correct;
-
     private static final int TESTS = 16;
 
     /**

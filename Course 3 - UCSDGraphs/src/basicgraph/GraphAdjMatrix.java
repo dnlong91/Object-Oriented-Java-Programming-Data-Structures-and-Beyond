@@ -14,10 +14,10 @@ import java.util.Set;
  * Representation of edges via an adjacency matrix.
  * 
  * @author UCSD MOOC development team and YOU
- *
+ * @author Ginny Dang
+ * 
  */
 public class GraphAdjMatrix extends Graph {
-
 	private final int defaultNumVertices = 5;
 	private int[][] adjMatrix;
 	
@@ -67,8 +67,8 @@ public class GraphAdjMatrix extends Graph {
 	 */	
 	public List<Integer> getNeighbors(int v) {
 		List<Integer> neighbors = new ArrayList<Integer>();
-		for (int i = 0; i < getNumVertices(); i ++) {
-			for (int j=0; j< adjMatrix[v][i]; j ++) {
+		for (int i = 0; i < getNumVertices(); i++) {
+			for (int j = 0; j< adjMatrix[v][i]; j++) {
 				neighbors.add(i);
 			}
 		}
@@ -87,8 +87,8 @@ public class GraphAdjMatrix extends Graph {
 	 */
 	public List<Integer> getInNeighbors(int v) {
 		List<Integer> inNeighbors = new ArrayList<Integer>();
-		for (int i = 0; i < getNumVertices(); i ++) {
-			for (int j=0; j< adjMatrix[i][v]; j++) {
+		for (int i = 0; i < getNumVertices(); i++) {
+			for (int j = 0; j< adjMatrix[i][v];j++) {
 				inNeighbors.add(i);
 			}
 		}
@@ -104,8 +104,13 @@ public class GraphAdjMatrix extends Graph {
 	 * @return List<Integer> a list of indices of vertices.  
 	 */	
 	public List<Integer> getDistance2(int v) {
-		// XXX Implement this method in week 2
-		return null;
+		List<Integer> neighbors = new ArrayList<Integer>();
+		for (int i = 0; i < getNumVertices(); i++) {
+			for (int j = 0; j < adjMatrix[v][i]; j++) {
+				neighbors.addAll(getNeighbors(i));
+			}
+		}
+		return neighbors;
 	}
 	
 	/**
@@ -115,7 +120,7 @@ public class GraphAdjMatrix extends Graph {
 	public String adjacencyString() {
 		int dim = getNumVertices();
 		String s = "Adjacency matrix";
-		s += " (size " + dim + "x" + dim + " = " + dim* dim + " integers):";
+		s += " (size " + dim + "x" + dim + " = " + dim * dim + " integers):";
 		for (int i = 0; i < dim; i ++) {
 			s += "\n\t"+i+": ";
 			for (int j = 0; j < dim; j++) {
@@ -124,5 +129,4 @@ public class GraphAdjMatrix extends Graph {
 		}
 		return s;
 	}
-
 }

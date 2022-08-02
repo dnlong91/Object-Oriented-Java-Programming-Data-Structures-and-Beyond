@@ -15,11 +15,8 @@ import util.GraphLoader;
  */
 public class DegreeGrader {
     private String feedback;  // Feedback from the grader
-
     private int correct;      // Tests correctly passed
-
     private static final int TESTS = 12;  // Number of tests
-
     
     /**
      * Turn a list into a readable and printable string
@@ -92,7 +89,6 @@ public class DegreeGrader {
         GraphLoader.loadGraph(file, mat);
         result = mat.degreeSequence();
         judge(result, corr);
-
     }
 
     /** Run a road map/airplane route test case.
@@ -127,7 +123,6 @@ public class DegreeGrader {
         feedback += appendFeedback(i * 2, "Testing adjacency matrix");
         result = mat.degreeSequence();
         judge(result, corr);
-
     }
 
     /** Compare the user's result with the right answer.
@@ -167,7 +162,6 @@ public class DegreeGrader {
     /** Run the grader. */
     public void run() {
         feedback = "";
-
         correct = 0;
 
         try {
