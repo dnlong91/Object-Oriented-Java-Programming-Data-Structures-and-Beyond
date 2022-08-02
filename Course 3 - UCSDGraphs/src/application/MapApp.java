@@ -49,6 +49,15 @@ import gmapsfx.javascript.object.LatLong;
 import gmapsfx.javascript.object.MapOptions;
 import gmapsfx.javascript.object.MapTypeIdEnum;
 
+
+import gmapsfx.javascript.object.Marker;
+import gmapsfx.javascript.object.MarkerOptions;
+import java.net.URL;
+import java.util.ResourceBundle;
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+
+
 public class MapApp extends Application
 implements MapComponentInitializedListener {
 
@@ -94,7 +103,6 @@ implements MapComponentInitializedListener {
 		});
 
 		HBox fetchControls = getBottomBox(tf, fetchButton);
-
 		VBox fetchBox = getFetchBox(displayButton, cb);
 
 
@@ -110,8 +118,9 @@ implements MapComponentInitializedListener {
 		//TODO -- hot fix
 		startLabel.setMinWidth(180);
 		endLabel.setMinWidth(180);
-		//        startLabel.setWrapText(true);
-		//        endLabel.setWrapText(true);
+		
+//		startLabel.setWrapText(true);
+//		endLabel.setWrapText(true);
 		Button startButton = new Button("Start");
 		Button destinationButton = new Button("Dest");
 
@@ -161,16 +170,12 @@ implements MapComponentInitializedListener {
 		scene.getStylesheets().add("html/routing.css");
 		primaryStage.setScene(scene);
 		primaryStage.show();
-
 	}
-
-
+	
 	@Override
 	public void mapInitialized() {
-
 		LatLong center = new LatLong(32.8810, -117.2380);
-
-
+		
 		// set map options
 		MapOptions options = new MapOptions();
 		options.center(center)
@@ -189,12 +194,8 @@ implements MapComponentInitializedListener {
 		// create map;
 		map = mapComponent.createMap(options);
 		setupJSAlerts(mapComponent.getWebView());
-
-
-
 	}
-
-
+	
 	// SETTING UP THE VIEW
 
 	private HBox getBottomBox(TextField tf, Button fetchButton) {
@@ -205,6 +206,7 @@ implements MapComponentInitializedListener {
 		box.getChildren().add(fetchButton);
 		return box;
 	}
+	
 	/**
 	 * Setup layout and controls for Fetch tab
 	 * @param fetchTab
@@ -216,10 +218,8 @@ implements MapComponentInitializedListener {
 		// add button to tab, rethink design and add V/HBox for content
 		VBox v = new VBox();
 		HBox h = new HBox();
-
-
-
 		HBox intersectionControls = new HBox();
+		
 		//        cb.setMinWidth(displayButton.getWidth());
 		cb.setPrefWidth(FETCH_COMPONENT_WIDTH);
 		intersectionControls.getChildren().add(cb);
@@ -249,9 +249,8 @@ implements MapComponentInitializedListener {
 		// v is inner container
 		VBox v = new VBox();
 		h.getChildren().add(v);
-
-
-
+		
+		
 		VBox selectLeft = new VBox();
 
 
@@ -299,11 +298,8 @@ implements MapComponentInitializedListener {
 		vButton.setDisable(true);
 		v.getChildren().add(markerBox);
 		//v.getChildren().add(resetButton);
-
-
+		
 		routeTab.setContent(h);
-
-
 	}
 
 	private void setupJSAlerts(WebView webView) {
@@ -383,6 +379,4 @@ implements MapComponentInitializedListener {
 		alert.setContentText(content);
 		alert.showAndWait();
 	}
-
-
 }
