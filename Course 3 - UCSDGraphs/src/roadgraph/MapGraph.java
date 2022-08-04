@@ -151,6 +151,7 @@ public class MapGraph {
 		HashSet<MapNode> visited = new HashSet<MapNode>();
 		Queue<MapNode> toExplore = new LinkedList<MapNode>();
 		boolean found = false;
+		int count = 0; // count visited
 		
 		visited.add(startNode);
 		toExplore.add(startNode);
@@ -159,6 +160,7 @@ public class MapGraph {
 			MapNode currNode = toExplore.remove();
 			// Hook for visualization
 			nodeSearched.accept(currNode.getPoint());
+			count++;
 			// The goalNode is found here
 			if (currNode.equals(goalNode)) {
 				found = true;
@@ -183,6 +185,12 @@ public class MapGraph {
 		
 		// Reconstruct the parent path
 		List<GeographicPoint> path = constructPath(startNode, goalNode, parentMap);
+		System.out.println("Nodes visited by BFS: " + count);
+		System.out.println();
+//		for (GeographicPoint pt : path) {
+//			System.out.println(pt + " ~> ");
+//		}
+		System.out.println("Final BFS path length: " + path.size());
 		return path;
 	}
 
@@ -204,7 +212,7 @@ public class MapGraph {
 	 * 
 	 * @param start The starting location
 	 * @param goal The goal location
-	 * @param nodeSearched A hook for visualization.  See assignment instructions for how to use it.
+	 * @param nodeSearched A hook for visualization.
 	 * @return The list of intersections that form the shortest path from 
 	 *   start to goal (including both start and goal).
 	 */
@@ -241,7 +249,7 @@ public class MapGraph {
 			// Hook for visualization
 			nodeSearched.accept(currNode.getPoint());
 			count++;
-			System.out.println("DIJKSTRA visiting" + currNode);
+//			System.out.println("DIJKSTRA visiting" + currNode);
 			// The goalNode is found here
 			if (currNode.equals(goalNode)) {
 				break;
@@ -274,7 +282,12 @@ public class MapGraph {
 		
 		// Reconstruct the parent path
 		List<GeographicPoint> path = constructPath(startNode, goalNode, parentMap);
-		System.out.println("Nodes visited in search: " + count);
+		System.out.println("Nodes visited by Dijkstra: " + count);
+		System.out.println("Final Dijkstra path length: " + path.size());
+		System.out.println();
+//		for (GeographicPoint pt : path) {
+//			System.out.println(pt + " ~> ");
+//		}
 		return path;
 	}
 
@@ -295,7 +308,7 @@ public class MapGraph {
 	 * 
 	 * @param start The starting location
 	 * @param goal The goal location
-	 * @param nodeSearched A hook for visualization.  See assignment instructions for how to use it.
+	 * @param nodeSearched A hook for visualization.
 	 * @return The list of intersections that form the shortest path from 
 	 *   start to goal (including both start and goal).
 	 */
@@ -334,7 +347,7 @@ public class MapGraph {
 			// Hook for visualization
 			nodeSearched.accept(currNode.getPoint());
 			count++;
-			System.out.println("A* visiting" + currNode);
+//			System.out.println("A* visiting" + currNode);
 			// The goalNode is found here
 			if (currNode.equals(goalNode)) {
 				break;
@@ -371,14 +384,204 @@ public class MapGraph {
 		
 		// Reconstruct the parent path
 		List<GeographicPoint> path = constructPath(startNode, goalNode, parentMap);
-		System.out.println("Nodes visited in search: " + count);
+		System.out.println("Nodes visited by A*: " + count);
+		System.out.println("Final A* path length: " + path.size());
+		System.out.println();
+//		for (GeographicPoint pt : path) {
+//			System.out.println(pt + " ~> ");
+//		}
 		return path;
 	}
 	
+	/** Find the path from start to goal using Bellman Ford's algorithm
+	 * 
+	 * @param start The starting location
+	 * @param goal The goal location
+	 * @return The list of intersections that form the shortest path from 
+	 *   start to goal (including both start and goal).
+	 */
+	public List<GeographicPoint> bellmanFord(GeographicPoint start, GeographicPoint goal) {
+		// Setup - check validity of inputs
+		if (start == null || goal == null) {
+			throw new NullPointerException("Cannot find route from or to null node");
+		}
+					
+		MapNode startNode = vertices.get(start);
+		MapNode goalNode = vertices.get(goal);
+					
+		if (startNode == null || goalNode == null) {
+			System.out.println("Start or goal node is null! No path exists.");
+			return new LinkedList<GeographicPoint>();
+		}
+		
+		// Bellman Ford's algorithm
+		HashMap<MapNode, MapNode> parentMap = new HashMap<MapNode, MapNode>();
+		int numNodes = vertices.size();
+		
+		// Initialize distance from startNode to all nodes
+		for (MapNode node : vertices.values()) {
+			node.setDistance(Double.POSITIVE_INFINITY);
+		}
+		startNode.setDistance(0);
+		
+		// Get all edges of the graph
+		Set<MapEdge> allEdges = new HashSet<MapEdge>();
+		for (MapNode node : vertices.values()) {
+			Set<MapEdge> edges = node.getEdges();
+			allEdges.addAll(edges);
+		}
+		
+		// Iterate through all edges for (numNodes - 1) times
+		for (int i = 1; i <= numNodes - 1; i++) {
+			for (MapEdge edge : allEdges) {
+				MapNode currNode = edge.getStartNode();
+				MapNode nextNode = edge.getEndNode();
+				double dist = edge.getLength();
+				
+				if (currNode.getDistance() != Double.POSITIVE_INFINITY && currNode.getDistance() + dist < nextNode.getDistance()) {
+					nextNode.setDistance(currNode.getDistance() + dist);
+					parentMap.put(nextNode, currNode);
+				}
+			}
+		}
+		
+		// Check for negative cycle
+		for (MapEdge edge : allEdges) {
+			MapNode currNode = edge.getStartNode();
+			MapNode nextNode = edge.getEndNode();
+			double dist = edge.getLength();
+			
+			if (currNode.getDistance() != Double.POSITIVE_INFINITY && currNode.getDistance() + dist < nextNode.getDistance()) {
+				return null;
+			}
+		}
+		
+		// The goalNode has not been found, after exploring all nodes
+		if (goalNode.getDistance() == Double.POSITIVE_INFINITY) {
+			System.out.println("No path found from " + start + " to " + goal);
+			return null;
+		}
+		
+		// Reconstruct the parent path
+		List<GeographicPoint> path = constructPath(startNode, goalNode, parentMap);
+		System.out.println("Nodes visited by Bellman Ford: " + numNodes);
+		System.out.println("Final Bellman Ford path length: " + path.size());
+		System.out.println();
+//		for (GeographicPoint pt : path) {
+//			System.out.println(pt + " ~> ");
+//		}
+		return path;
+	}
+	
+	/** Find the path from start to goal using Floyd Warshall's algorithm
+	 * 
+	 * @param start The starting location
+	 * @param goal The goal location
+	 * @return The list of intersections that form the shortest path from 
+	 *   start to goal (including both start and goal).
+	 */
+	public List<GeographicPoint> floydWarshall(GeographicPoint start, GeographicPoint goal) {
+		// Setup - check validity of inputs
+		if (start == null || goal == null) {
+			throw new NullPointerException("Cannot find route from or to null node");
+		}
+					
+		MapNode startNode = vertices.get(start);
+		MapNode goalNode = vertices.get(goal);
+					
+		if (startNode == null || goalNode == null) {
+			System.out.println("Start or goal node is null! No path exists.");
+			return new LinkedList<GeographicPoint>();
+		}
+		
+		// Floyd Warshall's algorithm
+		// Encoding all graph nodes by adding them to an ArrayList and utilizing the indices
+		List<MapNode> nodes = new ArrayList<MapNode>();
+		for (MapNode vertex : vertices.values()) {
+			nodes.add(vertex);
+		}
+		
+		// Store the graph with all edge lengths in a adjacency matrix and initialize the distances and paths matrices
+		int numNodes = nodes.size();
+		double[][] graph = new double[numNodes][numNodes];
+		double[][] distances = new double[numNodes][numNodes];
+		int[][] paths = new int[numNodes][numNodes];
+		for (int i = 0; i < numNodes; i++) {
+			MapNode currNode = nodes.get(i);
+			Set<MapNode> currNeighbors = currNode.getNeighbors();
+			Set<MapEdge> currEdges = currNode.getEdges();
+			for (int j = 0; j < numNodes; j++) {
+				MapNode neighborNode = nodes.get(j);
+				if (currNeighbors.contains(neighborNode)) {
+					for (MapEdge edge : currEdges) {
+						if (edge.getEndNode().equals(neighborNode)) {
+							graph[i][j] = edge.getLength();
+						}
+					}
+				} else {
+					graph[i][j] = Double.POSITIVE_INFINITY;
+				}
+			}
+		}
+		int startNodeIndex = nodes.indexOf(startNode);
+		graph[startNodeIndex][startNodeIndex] = 0;
+		
+		// Iterate
+		for (int i = 0; i < numNodes; i++) {
+			for (int j = 0; j < numNodes; j++) {
+				distances[i][j] = graph[i][j];
+				if (graph[i][j] != Double.POSITIVE_INFINITY && i != j) {
+					paths[i][j] = i;
+				} else {
+					paths[i][j] = -1;
+				}
+			}
+		}
+		
+		for (int k = 0; k < numNodes; k++) {
+			for (int i = 0; i < numNodes; i++) {
+				for (int j = 0; j < numNodes; j++) {
+					if (distances[i][j] > distances[i][k] + distances[k][j]) {
+						distances[i][j] = distances[i][k] + distances[k][j];
+						paths[i][j] = paths[k][j];
+					}
+				}
+			}
+		}
+		
+		for (int i = 0; i < numNodes; i++) {
+			if (distances[i][i] < 0) {
+				return null;
+			}
+		}
+		
+		// Reconstruct the parent path
+		List<GeographicPoint> path = constructPath(startNode, goalNode, nodes, paths);
+		System.out.println("Nodes visited by Floyd Warshall: " + numNodes);
+		System.out.println("Final Floyd Warshall path length: " + path.size());
+		System.out.println();
+//		for (GeographicPoint pt : path) {
+//			System.out.println(pt + " ~> ");
+//		}
+		return path;
+	}
+
+	private List<GeographicPoint> constructPath(MapNode startNode, MapNode goalNode, List<MapNode> nodes, int[][] paths) {
+		int s = nodes.indexOf(startNode);
+		int g = nodes.indexOf(goalNode);
+		LinkedList<GeographicPoint> path = new LinkedList<GeographicPoint>();
+		while (s != g) {
+			path.add(nodes.get(g).getPoint());
+			g = paths[s][g];
+		}
+		path.add(nodes.get(s).getPoint());
+		return path;
+	}
+
 	private List<GeographicPoint> constructPath(MapNode startNode, MapNode goalNode, HashMap<MapNode, MapNode> parentMap) {
 		LinkedList<GeographicPoint> path = new LinkedList<GeographicPoint>();
 		MapNode curr = goalNode;
-		while (curr != startNode) {
+		while (!curr.equals(startNode)) {
 			path.addFirst(curr.getPoint());
 			curr = parentMap.get(curr);
 		}
@@ -406,9 +609,12 @@ public class MapGraph {
 		GeographicPoint testStart = new GeographicPoint(1.0, 1.0);
 		GeographicPoint testEnd = new GeographicPoint(8.0, -1.0);
 		
-		System.out.println("Test 1 using simpletest: Dijkstra should be 9 and AStar should be 5");
-		List<GeographicPoint> testroute = simpleTestMap.dijkstra(testStart,testEnd);
-		List<GeographicPoint> testroute2 = simpleTestMap.aStarSearch(testStart,testEnd);
+//		System.out.println("Test 1 using simpletest: Dijkstra should be 9 and AStar should be 5");
+		System.out.println("Test 1 using simpletest");
+		List<GeographicPoint> testroute = simpleTestMap.dijkstra(testStart, testEnd);
+		List<GeographicPoint> testroute2 = simpleTestMap.aStarSearch(testStart, testEnd);
+		List<GeographicPoint> testroute3 = simpleTestMap.bellmanFord(testStart, testEnd);
+		List<GeographicPoint> testroute4 = simpleTestMap.floydWarshall(testStart, testEnd);
 		
 		
 		MapGraph testMap = new MapGraph();
@@ -417,18 +623,22 @@ public class MapGraph {
 		// A very simple test using real data
 		testStart = new GeographicPoint(32.869423, -117.220917);
 		testEnd = new GeographicPoint(32.869255, -117.216927);
-		System.out.println("Test 2 using utc: Dijkstra should be 13 and AStar should be 5");
-		testroute = testMap.dijkstra(testStart,testEnd);
-		testroute2 = testMap.aStarSearch(testStart,testEnd);
-		
+//		System.out.println("Test 2 using utc: Dijkstra should be 13 and AStar should be 5");
+		System.out.println("Test 2 using utc");
+		testroute = testMap.dijkstra(testStart, testEnd);
+		testroute2 = testMap.aStarSearch(testStart, testEnd);
+		testroute3 = testMap.bellmanFord(testStart, testEnd);
+		testroute4 = testMap.floydWarshall(testStart, testEnd);
 		
 		// A slightly more complex test using real data
 		testStart = new GeographicPoint(32.8674388, -117.2190213);
 		testEnd = new GeographicPoint(32.8697828, -117.2244506);
-		System.out.println("Test 3 using utc: Dijkstra should be 37 and AStar should be 10");
-		testroute = testMap.dijkstra(testStart,testEnd);
-		testroute2 = testMap.aStarSearch(testStart,testEnd);
-		
+//		System.out.println("Test 3 using utc: Dijkstra should be 37 and AStar should be 10");
+		System.out.println("Test 3 using utc");
+		testroute = testMap.dijkstra(testStart, testEnd);
+		testroute2 = testMap.aStarSearch(testStart, testEnd);
+		testroute3 = testMap.bellmanFord(testStart, testEnd);
+		testroute4 = testMap.floydWarshall(testStart, testEnd);
 		
 		/* Use this code in Week 3 End of Week Quiz */
 		MapGraph theMap = new MapGraph();
@@ -440,7 +650,9 @@ public class MapGraph {
 		GeographicPoint end = new GeographicPoint(32.8660691, -117.217393);
 		
 		System.out.println("\n\nQuiz test result");
-		List<GeographicPoint> route = theMap.dijkstra(start,end);
-		List<GeographicPoint> route2 = theMap.aStarSearch(start,end);
+		List<GeographicPoint> route = theMap.dijkstra(start, end);
+		List<GeographicPoint> route2 = theMap.aStarSearch(start, end);
+		List<GeographicPoint> route3 = theMap.bellmanFord(start, end);
+		List<GeographicPoint> route4 = theMap.floydWarshall(start, end);
 	}
 }
