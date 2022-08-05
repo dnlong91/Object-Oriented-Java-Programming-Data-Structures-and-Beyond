@@ -10,7 +10,14 @@
     <fullyQualifiedTypeName name="de.fhpotsdam.unfolding.marker.Marker"/>
     <fullyQualifiedTypeName name="document.Document"/>
     <fullyQualifiedTypeName name="java.util.regex.Pattern"/>
-    <fullyQualifiedTypeName name="java.util.List"/>
-    <fullyQualifiedTypeName name="java.util.ArrayList"/>
     <fullyQualifiedTypeName name="java.util.Collections"/>
+    <fullyQualifiedTypeName name="java.util.HashSet"/>
+    <fullyQualifiedTypeName name="java.util.HashMap"/>
+    <fullyQualifiedTypeName name="java.util.List"/>
+    <fullyQualifiedTypeName name="javax.tools.DocumentationTool.Location"/>
+    <fullyQualifiedTypeName name="java.util.ArrayList"/>
+    <fullyQualifiedTypeName name="java.util.function.Consumer"/>
+    <fullyQualifiedTypeName name="javafx.util.Pair"/>
+    <fullyQualifiedTypeName name="geography.GeographicPoint"/>
+    <fullyQualifiedTypeName name="roadgraph.MapNode"/>
 </qualifiedTypeNameHistroy>
