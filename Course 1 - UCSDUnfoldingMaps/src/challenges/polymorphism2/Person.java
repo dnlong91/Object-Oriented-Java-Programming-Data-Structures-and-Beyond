@@ -1,4 +1,4 @@
-package polymorphism2;
+package challenges.polymorphism2;
 
 public class Person {
 	public void method1() {

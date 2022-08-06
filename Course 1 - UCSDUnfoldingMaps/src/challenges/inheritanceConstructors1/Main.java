@@ -1,4 +1,4 @@
-package inheritanceConstructors1;
+package challenges.inheritanceConstructors1;
 
 public class Main {
 	public static void main(String[] args) {

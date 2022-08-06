@@ -1,4 +1,4 @@
-package inheritanceConstructors2;
+package challenges.inheritanceConstructors2;
 
 public class Person {
 	private String name;

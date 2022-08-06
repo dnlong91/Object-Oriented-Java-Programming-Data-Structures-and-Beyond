@@ -1,4 +1,4 @@
-package polymorphism1;
+package challenges.polymorphism1;
 
 public class Person {
 	private String name; 

@@ -1,4 +1,4 @@
-package polymorphism2;
+package challenges.polymorphism2;
 
 public class Student extends Person {
     public void method1() {
