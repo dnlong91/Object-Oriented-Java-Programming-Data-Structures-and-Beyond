@@ -14,10 +14,27 @@ import util.GraphLoader;
  *
  */
 public class CapGraph implements Graph {
-	private Map<Integer, HashSet<Integer>> vertices;
+	private HashMap<Integer, HashSet<Integer>> vertices;
 	
+	// Create the original CapGraph
 	public CapGraph() {
 		vertices = new HashMap<Integer, HashSet<Integer>>();
+	}
+	
+	// Create the transposed CapGraph
+	public CapGraph Transpose() {
+		CapGraph transpose = new CapGraph();
+		// Add all vertices of the original graph to the transposed graph
+		for (int vertex : vertices.keySet()) {
+			transpose.vertices.put(vertex, new HashSet<Integer>());
+		}
+		// Add reversed edges to the transposed graph
+		for (int vertex : vertices.keySet()) {
+			for (int neighbor : vertices.get(vertex)) {
+				transpose.vertices.get(neighbor).add(vertex);
+			}
+		}
+		return transpose;
 	}
 	
 	/* (non-Javadoc)
@@ -45,15 +62,7 @@ public class CapGraph implements Graph {
 		fromNeighbors.add(to);
 		vertices.put(from, fromNeighbors);
 	}
-	
-	public HashSet<Integer> getNeighbors(int vertex) {
-		// Error handling
-		if (!vertices.containsKey(vertex)) {
-			throw new IllegalArgumentException("center point does not exist in the map");
-		}
-		return vertices.get(vertex);
-	}
-	
+
 	/* (non-Javadoc)
 	 * @see graph.Graph#getEgonet(int)
 	 */
@@ -64,13 +73,13 @@ public class CapGraph implements Graph {
 			throw new IllegalArgumentException("center point does not exist in the map");
 		}
 		// Find the egonet of the center
-		Graph egonet = new CapGraph();
+		CapGraph egonet = new CapGraph();
+		egonet.vertices.put(center, new HashSet<Integer>());
 		HashSet<Integer> neighbors = vertices.get(center);
 		// Add all nodes and edges connected to center to the egonet
 		for (int neighbor : neighbors) {
-			egonet.addVertex(neighbor);
-			egonet.addEdge(center, neighbor);
-			System.out.println("new vertex added to the egonet");
+			egonet.vertices.put(neighbor, new HashSet<Integer>());
+			egonet.vertices.get(center).add(neighbor);
 		}
 		// Amongst all existing neighbor nodes in the egonet,
 		// connect those that have connection in the original graph
@@ -78,36 +87,41 @@ public class CapGraph implements Graph {
 			HashSet<Integer> nextNeighbors = vertices.get(neighbor);
 			for (int nextNeighbor : nextNeighbors) {
 				if (neighbors.contains(nextNeighbor)) {
-					egonet.addEdge(neighbor, nextNeighbor);
-					System.out.println("connected 2 neighbors of the center of the egonet");
+					egonet.vertices.get(neighbor).add(nextNeighbor);
 				}
 			}
 		}
 		return egonet;
 	}
 	
-	private CapGraph copyGraph() {
-		CapGraph copy = new CapGraph();
-		for (int vertex : vertices.keySet()) {
-			copy.addVertex(vertex);
-			for (int neighbor : vertices.get(vertex)) {
-				copy.addEdge(vertex, neighbor);
+	/* DFS 1 keeps track of the order in which vertices finish
+	 * @param vertex - the vertex from which we explore
+	 * @param visited - all visited vertices up until this point
+	 * @param finished - all vertices that have no non-visited neighbors
+	 */
+	private void fillOrder(int vertex, HashSet<Integer> visited, Stack<Integer> finished) {
+		visited.add(vertex);
+		for (int neighbor : vertices.get(vertex)) {
+			if (!visited.contains(neighbor)) {
+				fillOrder(neighbor, visited, finished);
 			}
 		}
-		return copy;
+		finished.push(vertex);
 	}
 	
-	private CapGraph transpose() {
-		CapGraph transpose = new CapGraph();
-		for (int vertex : vertices.keySet()) {
-			transpose.addVertex(vertex);
-		}
-		for (int vertex : vertices.keySet()) {
-			for (int neighbor : vertices.get(vertex)) {
-				transpose.addEdge(neighbor, vertex);
+	/* DFS 2 explores the transposed graph in the reverse order of finish time
+	 * @param vertex -  the vertex from which we explore
+	 * @param visited - all visited vertices up until this point
+	 */
+	private CapGraph dfsUtil(int vertex, HashSet<Integer> visited, CapGraph newSCC) {
+		newSCC.addVertex(vertex);
+		visited.add(vertex);
+		for (int next : vertices.get(vertex)) {
+			if (!visited.contains(next)) {
+				dfsUtil(next, visited, newSCC);
 			}
 		}
-		return transpose;
+		return newSCC;
 	}
 
 	/* (non-Javadoc)
@@ -116,47 +130,26 @@ public class CapGraph implements Graph {
 	@Override
 	public List<Graph> getSCCs() {
 		List<Graph> sccs = new ArrayList<Graph>();
-		// Get the stack of vertices
-		Stack<Integer> graphVertices = new Stack<Integer>();
+		// DFS 1
+		Stack<Integer> finished = new Stack<Integer>();
+		HashSet<Integer> visited = new HashSet<Integer>();
 		for (int vertex : vertices.keySet()) {
-			graphVertices.push(vertex);
+			if (!visited.contains(vertex)) {
+				fillOrder(vertex, visited, finished);
+			}
 		}
-		// Get the original graph
-		CapGraph origin = copyGraph();
-		// Step 1: Keep track of the order in which vertices finish
-		Stack<Integer> finished1 = dfs(origin, graphVertices);
-		// Step 2: Compute the transpose of the original graph
-		CapGraph transpose = transpose();
-		// Step 3: Explore in the reverse order of finish time from dfs
-		Stack<Integer> finished2 = dfs(transpose, finished1);
-		// Get all SCCS
-		for (int vertex : finished2) {
-			// TODO
+		// Transpose the graph
+		CapGraph transpose = Transpose();
+		// DFS 2
+		visited.clear();
+		while (!finished.isEmpty()) {
+			int top = finished.pop();
+			if (!visited.contains(top)) {
+				CapGraph scc = transpose.dfsUtil(top, visited, new CapGraph());
+				sccs.add(scc);
+			}
 		}
 		return sccs;
-	}
-
-	private Stack<Integer> dfs(CapGraph graph, Stack<Integer> graphVertices) {
-		Set<Integer> visited = new HashSet<Integer>();
-		Stack<Integer> finished = new Stack<Integer>();
-		while (!graphVertices.isEmpty()) {
-			int vertex = graphVertices.pop();
-			if (!visited.contains(vertex)) {
-				dfsVisit(graph, vertex, visited, finished);
-			}
-		}
-		return finished;
-	}
-
-	private void dfsVisit(CapGraph graph, int vertex, Set<Integer> visited, Stack<Integer> finished) {
-		visited.add(vertex);
-		Set<Integer> neighbors = graph.getNeighbors(vertex);
-		for (int neighbor : neighbors) {
-			if (!visited.contains(neighbor)) {
-				dfsVisit(graph, neighbor, visited, finished);
-			}
-		}
-		finished.push(vertex);
 	}
 
 	/* (non-Javadoc)
@@ -164,8 +157,7 @@ public class CapGraph implements Graph {
 	 */
 	@Override
 	public HashMap<Integer, HashSet<Integer>> exportGraph() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.vertices;
 	}
 	
 	public static void main(String[] args) {
