@@ -1,6 +1,3 @@
-/**
- * 
- */
 package graph;
 
 import java.util.*;
