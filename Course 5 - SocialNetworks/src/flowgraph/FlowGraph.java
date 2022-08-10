@@ -1,4 +1,4 @@
-package graph;
+package flowgraph;
 
 import java.util.*;
 
@@ -7,16 +7,12 @@ import util.FlowGraphLoader;
 /**
  * @author Ginny Dang
  * 
- * Investigates the information flow within a social network
+ * Investigating the information flow within a social network
  */
 
 public class FlowGraph {
 	private HashSet<Integer> initGeneration;
 	private HashSet<Integer> currGeneration;
-//	private int a;
-//	private int b;
-//	private HashMap<Integer, HashSet<Integer>> vertices;
-//	private HashMap<Integer, HashSet<Integer>> affects;
 	protected int a;
 	protected int b;
 	protected HashMap<Integer, HashSet<Integer>> vertices;
@@ -60,8 +56,7 @@ public class FlowGraph {
 		}
 		boolean changesMade = false;
 		for (int vertex : vertices.keySet()) {
-//			if (initGeneration.contains(vertex)) {
-			if (currGeneration.contains(vertex)) {
+			if (initGeneration.contains(vertex)) {
 				continue;
 			}
 //			System.out.print("\nConsidering " + vertex);
@@ -142,18 +137,39 @@ public class FlowGraph {
 
 	public static void main(String[] args) {
 		// Init the graph
-		System.out.println("TEST:");
-//		Integer arr1[] = { 5, 6, 14, 1, 3, 8 };
-		Integer arr1[] = { 14, 1, 9 };
-		HashSet<Integer> init = new HashSet<Integer>(Arrays.asList(arr1));
-		FlowGraph fg = new FlowGraph(init, 2, 1);
+//		System.out.println("TEST 1:");
+////		Integer arr1[] = { 5, 6, 14, 1, 3, 8 };
+//		Integer arr1[] = { 14, 1, 9 };
+//		HashSet<Integer> init = new HashSet<Integer>(Arrays.asList(arr1));
+//		FlowGraph fg = new FlowGraph(init, 2, 1);
+//		// Load the graph
+//		System.out.print("Making a new flow graph...");
+//		System.out.print("DONE. \nLoading the map...");
+//		FlowGraphLoader.loadFlowGraph(fg, "data/small_test_graph.txt");
+//		System.out.println("DONE.");
+//		// Calculate new generations
+//		fg.updateGenerations();
+//		fg.printEffectTable();
+		
+		System.out.println("TEST 2:");
+		Integer arr2[] = new Integer[5000];
+		Random rand = new Random();
+		for (int i = 0; i < 5000; i++) {
+			arr2[i] = rand.nextInt(14947);
+		}
+		HashSet<Integer> init2 = new HashSet<Integer>(Arrays.asList(arr2));
+		FlowGraph fg = new FlowGraph(init2, 2, 1);
 		// Load the graph
-		System.out.print("Making a new flow graph...");
+		System.out.print("Making a new optimized flow graph...");
 		System.out.print("DONE. \nLoading the map...");
-		FlowGraphLoader.loadFlowGraph(fg, "data/small_test_graph.txt");
+		FlowGraphLoader.loadFlowGraph(fg, "data/facebook_ucsd.txt");
 		System.out.println("DONE.");
 		// Calculate new generations
-		fg.updateGenerations();
-		fg.printEffectTable();
+		long start = System.nanoTime();
+		fg.updateChanges();
+		long end = System.nanoTime();
+		long time = (end - start) / 1_000_000;
+		System.out.println("\nupdateChanges run time: " + time);
+//		fg.printEffectTable();
 	}
 }
