@@ -11,7 +11,7 @@ import java.util.HashSet;
 import java.util.Scanner;
 import java.util.Set;
 
-import graph.FlowGraph;
+import flowgraph.FlowGraph;
 
 public class FlowGraphLoader {
 	 /**
