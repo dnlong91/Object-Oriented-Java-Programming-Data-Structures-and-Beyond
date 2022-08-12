@@ -145,7 +145,7 @@ public class FlowGraph {
 //		// Load the graph
 //		System.out.print("Making a new flow graph...");
 //		System.out.print("DONE. \nLoading the map...");
-//		FlowGraphLoader.loadFlowGraph(fg, "data/small_test_graph.txt");
+//		FlowGraphLoader.loadFlowGraph(fg,"Course5-SocialNetworks/data/small_test_graph.txt");
 //		System.out.println("DONE.");
 //		// Calculate new generations
 //		fg.updateGenerations();
@@ -162,7 +162,7 @@ public class FlowGraph {
 		// Load the graph
 		System.out.print("Making a new optimized flow graph...");
 		System.out.print("DONE. \nLoading the map...");
-		FlowGraphLoader.loadFlowGraph(fg, "data/facebook_ucsd.txt");
+		FlowGraphLoader.loadFlowGraph(fg, "Course5-SocialNetworks/data/facebook_ucsd.txt");
 		System.out.println("DONE.");
 		// Calculate new generations
 		long start = System.nanoTime();

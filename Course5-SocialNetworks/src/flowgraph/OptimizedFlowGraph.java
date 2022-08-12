@@ -73,7 +73,7 @@ public class OptimizedFlowGraph extends FlowGraph {
 		// Load the graph
 		System.out.print("Making a new optimized flow graph...");
 		System.out.print("DONE. \nLoading the map...");
-		FlowGraphLoader.loadFlowGraph(ofg, "data/small_test_graph.txt");
+		FlowGraphLoader.loadFlowGraph(ofg, "Course5-SocialNetworks/data/small_test_graph.txt");
 		System.out.println("DONE.");
 		// Calculate new generations using Kahn algorithm
 		long start = System.nanoTime();
@@ -81,27 +81,27 @@ public class OptimizedFlowGraph extends FlowGraph {
 		long end = System.nanoTime();
 		long time = (end - start) / 1_000_000;
 		System.out.println("\nkahnUpdateChanges run time: " + time);
-//		ofg.printEffectTable();
+		ofg.printEffectTable();
 		
-		System.out.println("TEST 2:");
-		Integer arr2[] = new Integer[5000];
-		Random rand = new Random();
-		for (int i = 0; i < 5000; i++) {
-			arr2[i] = rand.nextInt(14947);
-		}
-		HashSet<Integer> init2 = new HashSet<Integer>(Arrays.asList(arr2));
-		ofg = new OptimizedFlowGraph(init2, 2, 1);
-		// Load the graph
-		System.out.print("Making a new optimized flow graph...");
-		System.out.print("DONE. \nLoading the map...");
-		FlowGraphLoader.loadFlowGraph(ofg, "data/facebook_ucsd.txt");
-		System.out.println("DONE.");
-		// Calculate new generations using Kahn algorithm
-		start = System.nanoTime();
-		ofg.kahnUpdateChanges();
-		end = System.nanoTime();
-		time = (end - start) / 1_000_000;
-		System.out.println("\nkahnUpdateChanges run time: " + time);
+//		System.out.println("TEST 2:");
+//		Integer arr2[] = new Integer[5000];
+//		Random rand = new Random();
+//		for (int i = 0; i < 5000; i++) {
+//			arr2[i] = rand.nextInt(14947);
+//		}
+//		HashSet<Integer> init2 = new HashSet<Integer>(Arrays.asList(arr2));
+//		ofg = new OptimizedFlowGraph(init2, 2, 1);
+//		// Load the graph
+//		System.out.print("Making a new optimized flow graph...");
+//		System.out.print("DONE. \nLoading the map...");
+//		FlowGraphLoader.loadFlowGraph(ofg, "Course5-SocialNetworks/data/facebook_ucsd.txt");
+//		System.out.println("DONE.");
+//		// Calculate new generations using Kahn algorithm
+//		start = System.nanoTime();
+//		ofg.kahnUpdateChanges();
+//		end = System.nanoTime();
+//		time = (end - start) / 1_000_000;
+//		System.out.println("\nkahnUpdateChanges run time: " + time);
 //		ofg.printEffectTable();
 	}
 }
