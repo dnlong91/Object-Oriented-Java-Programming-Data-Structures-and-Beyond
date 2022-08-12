@@ -7,6 +7,7 @@
 		<item key="WizardProjectsImportPage.STORE_CLOSE_CREATED_PROJECTS_ID" value="false"/>
 		<item key="WizardProjectsImportPage.STORE_HIDE_CONFLICTING_PROJECTS_ID" value="false"/>
 		<list key="WizardProjectsImportPage.STORE_DIRECTORIES">
+			<item value="/Users/khuedangmai/Desktop/SocialNetworks"/>
 			<item value="/Users/khuedangmai/Desktop/UCSDGraphs"/>
 			<item value="/Users/khuedangmai/Desktop/Course 2 - MOOCTextEditor"/>
 			<item value="/Users/khuedangmai/Desktop/Course 1- UCSDUnfoldingMaps"/>
@@ -16,9 +17,10 @@
 		</list>
 	</section>
 	<section name="NewWizardAction">
-		<item key="NewWizardSelectionPage.STORE_SELECTED_ID" value="org.eclipse.ui.wizards.new.project"/>
+		<item key="NewWizardSelectionPage.STORE_SELECTED_ID" value="org.eclipse.jdt.ui.wizards.JavaProjectWizard"/>
 		<list key="NewWizardSelectionPage.STORE_EXPANDED_CATEGORIES_ID">
 			<item value="org.eclipse.ui.Basic"/>
+			<item value="org.eclipse.jdt.ui.java"/>
 		</list>
 	</section>
 	<section name="BasicNewProjectResourceWizard">
