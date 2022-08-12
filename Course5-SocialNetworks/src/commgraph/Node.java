@@ -31,6 +31,17 @@ public class Node {
         return this.numPaths;
     }
 
+    public int getDistance() {
+        return this.distance;
+    }
+    public Set<Node> getNeighbors() {
+        Set<Node> neighbors = new HashSet<Node>();
+        for (Edge edge : edges) {
+            neighbors.add(edge.getEndNode());
+        }
+        return neighbors;
+    }
+
     public void setNumPaths(int newNumPaths) {
         this.numPaths = newNumPaths;
     }
