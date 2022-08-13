@@ -6,12 +6,12 @@
  */
 package util;
 
+import flowgraph.FlowGraph;
+
 import java.io.File;
 import java.util.HashSet;
 import java.util.Scanner;
 import java.util.Set;
-
-import flowgraph.FlowGraph;
 
 public class FlowGraphLoader {
 	 /**

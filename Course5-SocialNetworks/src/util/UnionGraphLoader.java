@@ -6,20 +6,20 @@
  */
 package util;
 
+import uniongraph.UnionGraph;
+
 import java.io.File;
 import java.util.HashSet;
 import java.util.Scanner;
 import java.util.Set;
 
-import commgraph.CommGraph;
-
-public class CommGraphLoader {
+public class UnionGraphLoader {
     /**
      * Loads graph with data from a file.
      * The file should consist of lines with 2 integers each, corresponding
      * to a "from" vertex and a "to" vertex.
      */
-    public static void loadCommGraph(CommGraph cg, String filename) {
+    public static void loadUnionGraph(UnionGraph ug, String filename) {
         Set<Integer> seen = new HashSet<Integer>();
         Scanner sc;
         try {
@@ -34,14 +34,15 @@ public class CommGraphLoader {
             int v1 = sc.nextInt();
             int v2 = sc.nextInt();
             if (!seen.contains(v1)) {
-                cg.addVertex(v1);
+                ug.addVertex(v1);
                 seen.add(v1);
             }
             if (!seen.contains(v2)) {
-                cg.addVertex(v2);
+                ug.addVertex(v2);
                 seen.add(v2);
             }
-            cg.addEdge(v1, v2);
+//            ug.addEdge(v1, v2);
+            ug.unionSet(v1, v2);
         }
         sc.close();
     }
