@@ -2,28 +2,15 @@ package uniongraph;
 
 import util.UnionGraphLoader;
 
-import java.util.*;
-
 /**
  * @author Ginny Dang
  *
  * Investigating the connection between any 2 people using Union Find
  */
 
-public class UnionGraph {
-    private HashSet<Integer> vertices;
-    private HashMap<Integer, Integer> parents; // Map a child to its parent
-    private HashSet<Integer> uniqueParents; // All nodes that actually has at least 1 child that is not itself
-
-    public UnionGraph() {
-        vertices = new HashSet<Integer>();
-        parents = new HashMap<Integer, Integer>();
-        uniqueParents = new HashSet<Integer>();
-    }
-
-    public void addVertex(int vertex) {
-        vertices.add(vertex);
-        parents.put(vertex, vertex);
+public class BasicUnionGraph extends UnionGraph{
+    public BasicUnionGraph() {
+        super();
     }
 
     public int findSet(int vertex) {
@@ -50,28 +37,28 @@ public class UnionGraph {
     }
 
     public static void main(String[] args) {
+        /********* Test using Dataset 1 *********/
         // Init the graph
         String filename = "Course5-SocialNetworks/data/small_test_graph.txt";
 		System.out.println("DATASET 1: " + filename);
-		UnionGraph ug = new UnionGraph();
+		UnionGraph bug = new BasicUnionGraph();
 		// Load the graph
-		System.out.print("Making a new union graph...");
+		System.out.print("Making a new basic union graph...");
 		System.out.print("DONE. \nLoading the map...");
         long start = System.nanoTime();
-		UnionGraphLoader.loadUnionGraph(ug, filename);
-//        UnionGraphLoader.loadUnionGraph(ug,"Course5-SocialNetworks/data/facebook_ucsd.txt");
+		UnionGraphLoader.loadUnionGraph(bug, filename);
         long end = System.nanoTime();
-        long time = (end - start) / 1_000_000;
+        long time = (end - start) / 1000;
 		System.out.println("DONE.");
         System.out.println("Loading time: " + time);
-        System.out.println("Number of vertices: " + ug.vertices.size());
-        for (int parent : ug.parents.keySet()) {
-            System.out.println(parent + " : " + ug.parents.get(parent));
-        }
-        System.out.println("Number of unique parents: " + ug.uniqueParents.size());
-        for (int uniqueParent : ug.uniqueParents) {
-            System.out.print(uniqueParent + " " );
-        }
+        System.out.println("Number of vertices: " + bug.vertices.size());
+//        for (int parent : bug.parents.keySet()) {
+//            System.out.println(parent + " : " + bug.parents.get(parent));
+//        }
+        System.out.println("Number of unique parents: " + bug.uniqueParents.size());
+//        for (int uniqueParent : bug.uniqueParents) {
+//            System.out.print(uniqueParent + " " );
+//        }
 
         // Detect the connection between 2 people in the network
         System.out.println("\nTEST 1:");
@@ -79,15 +66,15 @@ public class UnionGraph {
         int user2 = 10;
         System.out.print("Is " + user1 + " directly or indirectly connected with " + user2 + "? ");
         start = System.nanoTime();
-        int parent1 = ug.findSet(user1);
-        int parent2 = ug.findSet(user2);
+        int parent1 = bug.findSet(user1);
+        int parent2 = bug.findSet(user2);
         if (parent1 == parent2) {
             System.out.print("YES");
         } else {
             System.out.print("NO");
         }
         end = System.nanoTime();
-        time = (end - start) / 1_000_000;
+        time = (end - start) / 1000;
         System.out.println("\nRun time: " + time);
 
         System.out.println("\nTEST 2:");
@@ -95,15 +82,15 @@ public class UnionGraph {
         user2 = 4;
         System.out.print("Is " + user1 + " directly or indirectly connected with " + user2 + "? ");
         start = System.nanoTime();
-        parent1 = ug.findSet(user1);
-        parent2 = ug.findSet(user2);
+        parent1 = bug.findSet(user1);
+        parent2 = bug.findSet(user2);
         if (parent1 == parent2) {
             System.out.print("YES");
         } else {
             System.out.print("NO");
         }
         end = System.nanoTime();
-        time = (end - start) / 1_000_000;
+        time = (end - start) / 1000;
         System.out.println("\nRun time: " + time);
 
         System.out.println("\nTEST 3:");
@@ -111,15 +98,87 @@ public class UnionGraph {
         user2 = 9;
         System.out.print("Is " + user1 + " directly or indirectly connected with " + user2 + "? ");
         start = System.nanoTime();
-        parent1 = ug.findSet(user1);
-        parent2 = ug.findSet(user2);
+        parent1 = bug.findSet(user1);
+        parent2 = bug.findSet(user2);
         if (parent1 == parent2) {
             System.out.print("YES");
         } else {
             System.out.print("NO");
         }
         end = System.nanoTime();
-        time = (end - start) / 1_000_000;
+        time = (end - start) / 1000;
+        System.out.println("\nRun time: " + time);
+
+        /********* Test using Dataset 2 *********/
+        // Init the graph
+        filename = "Course5-SocialNetworks/data/facebook_ucsd.txt";
+        System.out.println("\nDATASET 2: " + filename);
+        bug = new BasicUnionGraph();
+        // Load the graph
+        System.out.print("Making a new basic union graph...");
+        System.out.print("DONE. \nLoading the map...");
+        start = System.nanoTime();
+        UnionGraphLoader.loadUnionGraph(bug, filename);
+        end = System.nanoTime();
+        time = (end - start) / 1000;
+        System.out.println("DONE.");
+        System.out.println("Loading time: " + time);
+        System.out.println("Number of vertices: " + bug.vertices.size());
+//        for (int parent : bug.parents.keySet()) {
+//            System.out.println(parent + " : " + bug.parents.get(parent));
+//        }
+        System.out.println("Number of unique parents: " + bug.uniqueParents.size());
+//        for (int uniqueParent : bug.uniqueParents) {
+//            System.out.print(uniqueParent + " " );
+//        }
+
+        // Detect the connection between 2 people in the network
+        System.out.println("\nTEST 1:");
+        user1 = 2410;
+        user2 = 10;
+        System.out.print("Is " + user1 + " directly or indirectly connected with " + user2 + "? ");
+        start = System.nanoTime();
+        parent1 = bug.findSet(user1);
+        parent2 = bug.findSet(user2);
+        if (parent1 == parent2) {
+            System.out.print("YES");
+        } else {
+            System.out.print("NO");
+        }
+        end = System.nanoTime();
+        time = (end - start) / 1000;
+        System.out.println("\nRun time: " + time);
+
+        System.out.println("\nTEST 2:");
+        user1 = 3112;
+        user2 = 12;
+        System.out.print("Is " + user1 + " directly or indirectly connected with " + user2 + "? ");
+        start = System.nanoTime();
+        parent1 = bug.findSet(user1);
+        parent2 = bug.findSet(user2);
+        if (parent1 == parent2) {
+            System.out.print("YES");
+        } else {
+            System.out.print("NO");
+        }
+        end = System.nanoTime();
+        time = (end - start) / 1000;
+        System.out.println("\nRun time: " + time);
+
+        System.out.println("\nTEST 3:");
+        user1 = 1231;
+        user2 = 1024;
+        System.out.print("Is " + user1 + " directly or indirectly connected with " + user2 + "? ");
+        start = System.nanoTime();
+        parent1 = bug.findSet(user1);
+        parent2 = bug.findSet(user2);
+        if (parent1 == parent2) {
+            System.out.print("YES");
+        } else {
+            System.out.print("NO");
+        }
+        end = System.nanoTime();
+        time = (end - start) / 1000;
         System.out.println("\nRun time: " + time);
     }
 }
