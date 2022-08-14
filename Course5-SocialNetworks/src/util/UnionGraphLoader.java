@@ -30,6 +30,7 @@ public class UnionGraphLoader {
         }
         // Iterate over the lines in the file, adding new
         // vertices as they are found and connecting them with edges.
+        int numEdges = 0;
         while (sc.hasNextInt()) {
             int v1 = sc.nextInt();
             int v2 = sc.nextInt();
@@ -41,9 +42,13 @@ public class UnionGraphLoader {
                 ug.addVertex(v2);
                 seen.add(v2);
             }
-//            ug.addEdge(v1, v2);
             ug.unionSet(v1, v2);
+            numEdges += 1;
+            if (numEdges % 100000 == 0) {
+                System.out.print("...");
+            }
         }
+//        System.out.println(numEdges);
         sc.close();
     }
 }
