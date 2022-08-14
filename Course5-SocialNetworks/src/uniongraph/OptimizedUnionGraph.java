@@ -15,14 +15,6 @@ public class OptimizedUnionGraph extends BasicUnionGraph {
 
     public OptimizedUnionGraph() {
         super();
-        ranks = new HashMap<Integer, Integer>();
-    }
-
-    @Override
-    public void addVertex(int vertex) {
-        vertices.add(vertex);
-        parents.put(vertex, vertex);
-        ranks.put(vertex, 0);
     }
 
     public int findSet(int vertex) {
@@ -42,26 +34,11 @@ public class OptimizedUnionGraph extends BasicUnionGraph {
     public void unionSet(int vertex1, int vertex2) {
         int parent1 = findSet(vertex1);
         int parent2 = findSet(vertex2);
-
-        if (parent1 == parent2) {
-            return;
-        }
-
-        if (ranks.get(parent1) > ranks.get(parent2)) {
-            parents.put(parent2, parent1);
-        } else if (ranks.get(parent1) < ranks.get(parent2)) {
-            parents.put(parent1, parent2);
-        } else {
-            parents.put(parent1, parent2);
-            int parent2Rank = ranks.get(parent2);
-            ranks.put(parent2, parent2Rank + 1);
-        }
-
+        parents.put(parent1, parent2);
         // TODO: make sure this is correct
-        parent1 = parents.get(vertex1);
-        parent2 = parents.get(vertex2);
         if (parent2 != parent1) {
             uniqueParents.add(parent2);
+            uniqueParents.remove(parent1);
         }
     }
 
