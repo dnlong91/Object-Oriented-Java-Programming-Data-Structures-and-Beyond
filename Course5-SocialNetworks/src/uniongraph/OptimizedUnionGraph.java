@@ -42,15 +42,6 @@ public class OptimizedUnionGraph extends BasicUnionGraph {
         }
     }
 
-    // TODO: for testing only
-//    private int getNumRanks() {
-//        HashSet<Integer> uniqueRanks = new HashSet<Integer>();
-//        for (int rank : ranks.values()) {
-//            uniqueRanks.add(rank);
-//        }
-//        return uniqueRanks.size();
-//    }
-
     public static void main(String[] args) {
         /********* Test using Dataset 1 *********/
         // Init the graph
@@ -130,7 +121,7 @@ public class OptimizedUnionGraph extends BasicUnionGraph {
         // Init the graph
         filename = "Course5-SocialNetworks/data/facebook_ucsd.txt";
         System.out.println("\nDATASET 2: " + filename);
-        oug = new BasicUnionGraph();
+        oug = new OptimizedUnionGraph();
         // Load the graph
         System.out.print("Making a new basic union graph...");
         System.out.print("DONE. \nLoading the map...");
