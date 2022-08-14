@@ -1,19 +1,18 @@
 package flowgraph;
 
-import java.util.*;
-
 import util.FlowGraphLoader;
 
+import java.util.*;
+
 public class OptimizedFlowGraph extends FlowGraph {
-	private HashSet<Integer> currGeneration;
-	
 	public OptimizedFlowGraph(HashSet<Integer> init, int rewardA, int rewardB) {
 		super(init, rewardA, rewardB);
-		currGeneration = new HashSet<Integer>();
-		currGeneration.addAll(init);
 	}
 	
-	public void kahnUpdateChanges() {
+	/*
+	 This updateChanges() method is optimized with the idea of Kahn's Algorithm
+	 */
+	public void updateChanges() {
 		// Print all members of currGeneration before updated
 //		System.out.print("\ncurrGeneration before updated: ");
 //		for (int vertex : currGeneration) {
@@ -63,6 +62,40 @@ public class OptimizedFlowGraph extends FlowGraph {
 		return changesMade;
 	}
 
+	public void printEffectTable() {
+		// TODO: Optimize this function
+		System.out.printf("------------------------------------------------------------------------------------------------------------------------------------------------------------------%n");
+		System.out.printf("|  %s  |   %s   |   %s   |   %s   |   %s   |%n", "VERTEX", "                             AFFECTED NEIGHBORS                            ", "AFFECTED NEIGHBOR COUNT", "NEIGHBOR COUNT", "PERCENTAGE");
+		System.out.printf("------------------------------------------------------------------------------------------------------------------------------------------------------------------%n");
+		for (int vertex: affects.keySet()) {
+			String neighborStr = "";
+			int affectedNeighborCount = affects.get(vertex).size();
+			int neighborCount = vertices.get(vertex).size();
+			float percentage = ((float)affectedNeighborCount / (float)neighborCount) * 100;
+			// Vertex Column
+			System.out.printf("| %8d | ", vertex);
+			// Affected Neighbors Column
+			for (int neighbor : affects.get(vertex)) {
+				neighborStr += String.valueOf(neighbor) + " ";
+				if (neighborStr.length() >= 80) {
+					break;
+				}
+			}
+//			System.out.printf("%-79s |", neighborStr);
+			if (neighborStr.length() < 80) {
+				System.out.printf("%-79s |", neighborStr);
+			} else {
+				System.out.printf("%-79s |", neighborStr.substring(0, 76) + "...");
+			}
+			// Affected Neighbor Count Column
+			System.out.printf("%28d |", affectedNeighborCount);
+			// Neighbor Count Column
+			System.out.printf("%19d |", neighborCount);
+			// Percentage Column
+			System.out.printf("%14.2f%% |%n", percentage);
+		}
+	}
+
 	public static void main(String[] args) {
 		// Init the graph
 		System.out.println("TEST 1:");
@@ -77,31 +110,31 @@ public class OptimizedFlowGraph extends FlowGraph {
 		System.out.println("DONE.");
 		// Calculate new generations using Kahn algorithm
 		long start = System.nanoTime();
-		ofg.kahnUpdateChanges();
+		ofg.updateChanges();
 		long end = System.nanoTime();
 		long time = (end - start) / 1_000_000;
 		System.out.println("\nkahnUpdateChanges run time: " + time);
-		ofg.printEffectTable();
+//		ofg.printEffectTable();
 		
-//		System.out.println("TEST 2:");
-//		Integer arr2[] = new Integer[5000];
-//		Random rand = new Random();
-//		for (int i = 0; i < 5000; i++) {
-//			arr2[i] = rand.nextInt(14947);
-//		}
-//		HashSet<Integer> init2 = new HashSet<Integer>(Arrays.asList(arr2));
-//		ofg = new OptimizedFlowGraph(init2, 2, 1);
-//		// Load the graph
-//		System.out.print("Making a new optimized flow graph...");
-//		System.out.print("DONE. \nLoading the map...");
-//		FlowGraphLoader.loadFlowGraph(ofg, "Course5-SocialNetworks/data/facebook_ucsd.txt");
-//		System.out.println("DONE.");
-//		// Calculate new generations using Kahn algorithm
-//		start = System.nanoTime();
-//		ofg.kahnUpdateChanges();
-//		end = System.nanoTime();
-//		time = (end - start) / 1_000_000;
-//		System.out.println("\nkahnUpdateChanges run time: " + time);
+		System.out.println("TEST 2:");
+		Integer arr2[] = new Integer[5000];
+		Random rand = new Random();
+		for (int i = 0; i < 5000; i++) {
+			arr2[i] = rand.nextInt(14947);
+		}
+		HashSet<Integer> init2 = new HashSet<Integer>(Arrays.asList(arr2));
+		ofg = new OptimizedFlowGraph(init2, 2, 1);
+		// Load the graph
+		System.out.print("Making a new optimized flow graph...");
+		System.out.print("DONE. \nLoading the map...");
+		FlowGraphLoader.loadFlowGraph(ofg, "Course5-SocialNetworks/data/facebook_ucsd.txt");
+		System.out.println("DONE.");
+		// Calculate new generations using Kahn algorithm
+		start = System.nanoTime();
+		ofg.updateChanges();
+		end = System.nanoTime();
+		time = (end - start) / 1_000_000;
+		System.out.println("\nkahnUpdateChanges run time: " + time);
 //		ofg.printEffectTable();
 	}
 }
