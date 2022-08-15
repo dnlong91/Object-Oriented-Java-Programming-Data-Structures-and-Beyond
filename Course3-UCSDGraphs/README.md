@@ -23,7 +23,7 @@ Date: 12/16/2015
 DESCRIPTION
 
 The files provided are skeleton code, as well as grading previews and 
-testing files to be used in completing the course programming 
+runtimebenchmark files to be used in completing the course programming 
 assignments. Additionally, you are provided a runnable JavaFX program 
 which will help to test and demonstrate your implementations.
 

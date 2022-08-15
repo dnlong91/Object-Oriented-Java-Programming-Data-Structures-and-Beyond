@@ -26,13 +26,13 @@ You will find the following two provided methods very helpful for this part:
 Note that these methods are implemented in Graph's subclasses, and can be called from the Graph class.  
 
 __3. (Last required step for Part 1) Test your implementation on fake data.__ Our main method in 
-Graph.java provides a skeleton for testing the methods you wrote in this section. Use and add to this method to do thorough testing of your methods. The [starter code and front end orientation guide](https://www.coursera.org/learn/advanced-data-structures/supplement/LxK6a/project-orientation-to-the-starter-code-data-files-and-front-end) gives you an overview of the data provided for testing. Start with the file data/testdata/simpletest.map which contains simulated road data, representing the following (fake) street map:
+Graph.java provides a skeleton for runtimebenchmark the methods you wrote in this section. Use and add to this method to do thorough runtimebenchmark of your methods. The [starter code and front end orientation guide](https://www.coursera.org/learn/advanced-data-structures/supplement/LxK6a/project-orientation-to-the-starter-code-data-files-and-front-end) gives you an overview of the data provided for runtimebenchmark. Start with the file data/testdata/simpletest.map which contains simulated road data, representing the following (fake) street map:
 
 <img src="./pics/pic1.png" width=500>
 
 All edges in the above map are considered 2-way. That is, for each line in the map, there are actually two edges in the graph, one in each direction.
 
-You can use this very simple map for testing, and you can also look at it to see how the map files are set up. You can make a copy of this file and modify it to modify the map you are testing with.
+You can use this very simple map for runtimebenchmark, and you can also look at it to see how the map files are set up. You can make a copy of this file and modify it to modify the map you are runtimebenchmark with.
 
 __4. (Optional) Make predictions about the degree-sequence of real-world data.__ Before you run your code on the real-world road intersections and flight graph data we provide, make some predictions:
 1. What will be the maximum degree of the road intersections graph?

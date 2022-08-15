@@ -55,9 +55,9 @@ nodeSearched.accept(next);
 
 If you successfully report each GeographicPoint associated with its node as the is explored to the nodeSearched Consumer, you will be able to run the visualization of your search from the front-end application, as described below.
 
-MapGraph also defines and implements the following method which you should NOT modify which can be useful for testing.  
+MapGraph also defines and implements the following method which you should NOT modify which can be useful for runtimebenchmark.  
 
-__public List<GeographicPoint> bfs(GeographicPoint start, GeographicPoint goal)__ Creates a dummy Consumer object and calls your bfs method. You do NOT need to modify this method. Useful for testing!  
+__public List<GeographicPoint> bfs(GeographicPoint start, GeographicPoint goal)__ Creates a dummy Consumer object and calls your bfs method. You do NOT need to modify this method. Useful for runtimebenchmark!  
 
 MapGraph also defines the following methods which you should NOT implement this week.   
 

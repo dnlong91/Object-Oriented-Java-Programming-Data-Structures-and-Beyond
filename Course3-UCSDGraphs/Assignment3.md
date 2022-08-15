@@ -20,7 +20,7 @@ __public List<GeographicPoint> dijkstra(GeographicPoint start, GeographicPoint g
 
 __public List<GeographicPoint> aStarSearch(GeographicPoint start, GeographicPoint goal, Consumer<GeographicPoint> nodeSearched)__ Performs the A-Star algorithm to search the graph starting at the start until it reaches the goal and returns a list of geographic points along the shortest (weighted) path from start to goal. Explored nodes are reported to the Consumer object for search visualization.
 
-For testing purposes, we've provided you with two methods which will create an artificial Consumer object, then call the corresponding method. These methods are called:
+For runtimebenchmark purposes, we've provided you with two methods which will create an artificial Consumer object, then call the corresponding method. These methods are called:
 
 __public List<GeographicPoint> dijkstra(GeographicPoint start, GeographicPoint goal)__ Creates a dummy Consumer object and calls your dijkstra method.  You do NOT need to modify this method.
 
@@ -54,7 +54,7 @@ Note that just like last week, you don't have to deal with creating a Consumer o
 
 __public List<GeographicPoint> dijkstra(GeographicPoint start, GeographicPoint goal)__
 
-For larger-scale testing or to see the search visualization, you can run the MapApp application with the real-world road data. Just make sure to select Dijkstra as your search algorithm.
+For larger-scale runtimebenchmark or to see the search visualization, you can run the MapApp application with the real-world road data. Just make sure to select Dijkstra as your search algorithm.
 
 ### Step 2: Author AStarSearch
 Please refer back to the videos this week for A Star Search pseudo-code. You'll likely be able to use your Dijkstra method as a starting point. Although there are critical changes to make going from Dijkstra to AStarSearch, you will also likely need to make an additional modification and/or add a new support class to help facilitate this search. Specifically, you'll need to be able to store two distance values. You'll want to keep the actual distance from the start node (just as we did in Dijkstra) but also keep a predicted distance (actual distance + straight line distance) which will be used by the priority queue to prioritize "better" paths. 
