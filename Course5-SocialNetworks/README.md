@@ -16,7 +16,7 @@
 ---------------------------------------------------------[ DESCRIPTION ]--
 
 The files provided are skeleton code, as well as grading previews and 
-testing files to be used in completing the course programming 
+runtimebenchmark files to be used in completing the course programming 
 assignments. No code will be provided for the capstone project.
 
 ---------------------------------------------------------------[ FILES ]--
