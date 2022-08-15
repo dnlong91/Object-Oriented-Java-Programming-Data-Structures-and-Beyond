@@ -7,20 +7,13 @@
 
 package graph.grader;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.PrintWriter;
-import util.GraphLoader;
-import java.util.List;
-import java.util.Set;
-import java.util.HashSet;
-import java.util.TreeSet;
-import java.util.Map;
-import java.util.HashMap;
-import java.util.ArrayList;
-import java.util.Scanner;
 import graph.CapGraph;
 import graph.Graph;
+import util.GraphLoader;
+
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.util.*;
 
 public class SCCGrader extends Grader {
     public int totalTests;
@@ -63,7 +56,6 @@ public class SCCGrader extends Grader {
         try {
 
             for(int i = 0; i < 10; i++) {
-//        	for(int i = 0; i < 1; i++) {
                 Graph g = new CapGraph();
                 Set<Integer> vertices;
 

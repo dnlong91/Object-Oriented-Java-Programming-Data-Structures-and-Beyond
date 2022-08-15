@@ -1,7 +1,6 @@
 package graph;
 
 import java.util.*;
-import util.GraphLoader;
 
 /**
  * @author Ginny Dang
@@ -19,7 +18,7 @@ public class CapGraph implements Graph {
 	}
 	
 	// Create the transposed CapGraph
-	public CapGraph Transpose() {
+	private CapGraph Transpose() {
 		CapGraph transpose = new CapGraph();
 		// Add all vertices of the original graph to the transposed graph
 		for (int vertex : vertices.keySet()) {
@@ -58,6 +57,10 @@ public class CapGraph implements Graph {
 		HashSet<Integer> fromNeighbors = vertices.get(from);
 		fromNeighbors.add(to);
 		vertices.put(from, fromNeighbors);
+	}
+
+	public int getNumVertices() {
+		return  vertices.size();
 	}
 
 	/* (non-Javadoc)
@@ -155,18 +158,5 @@ public class CapGraph implements Graph {
 	@Override
 	public HashMap<Integer, HashSet<Integer>> exportGraph() {
 		return this.vertices;
-	}
-	
-	public static void main(String[] args) {
-		System.out.print("Making a new graph...");
-		Graph firstGraph = new CapGraph();
-		System.out.print("DONE. \nLoading the map...");
-//		GraphLoader.loadGraph(firstGraph, "data/facebook_1000.txt");
-//		GraphLoader.loadGraph(firstGraph, "data/facebook_2000.txt");
-//		GraphLoader.loadGraph(firstGraph, "data/facebook_ucsd.txt");
-		GraphLoader.loadGraph(firstGraph, "data/small_test_graph.txt");
-//		GraphLoader.loadGraph(firstGraph, "data/twitter_combined.txt");
-//		GraphLoader.loadGraph(firstGraph, "data/twitter_higgs.txt");
-		System.out.println("DONE.");
 	}
 }
