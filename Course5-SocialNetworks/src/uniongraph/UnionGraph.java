@@ -22,4 +22,16 @@ public abstract class UnionGraph {
     public abstract int findSet(int vertex);
 
     public abstract void unionSet(int vertex1, int vertex2);
+
+    public int getNumVertices() {
+        return vertices.size();
+    }
+
+    public int getNumUniqueParents() {
+        return uniqueParents.size();
+    }
+
+    public HashSet<Integer> getVertices() {
+        return this.vertices;
+    }
 }
