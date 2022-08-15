@@ -1,5 +1,5 @@
-package testing;
+package runtimebenchmark;
 
-public class UnionGraphTester {
+public class UnionGraphRunner {
 
 }
