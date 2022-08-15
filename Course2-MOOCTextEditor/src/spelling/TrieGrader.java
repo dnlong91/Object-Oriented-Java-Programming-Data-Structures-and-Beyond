@@ -67,7 +67,7 @@ public class TrieGrader {
         ac.addWord("doggies");
         ac.addWord("test");
         ac.addWord("tester");
-        ac.addWord("testing");
+        ac.addWord("runtimebenchmark");
         ac.addWord("tested");
         ac.addWord("testin");
         ac.addWord("teston");
@@ -162,7 +162,7 @@ public class TrieGrader {
         count = partialList.contains("testone") ? ++count:count ;
         count = partialList.contains("testine") ? ++count:count;
         count = partialList.contains("testell") ? ++count:count;
-        count = partialList.contains("testing") ? ++count:count;
+        count = partialList.contains("runtimebenchmark") ? ++count:count;
 
         feedback.append("Out of 'testone', 'testine', 'testell', and 'testing', " + count + " words were found.");
     }

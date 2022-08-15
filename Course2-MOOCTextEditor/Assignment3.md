@@ -52,7 +52,7 @@ The tests for "testGet" may not properly stress the add method. To be sure your 
 Important note about all Linked List test cases: We want you to test real use cases of your list, but please don't go overboard with the size of the lists you create in your tests. Testing on lists on the order of tens or hundreds of elements is fine, but don't test on lists that contain thousands or millions of elements. Because we're using Java, what works for a small list will almost certainly also work for a very large list, within the limits of Java itself. Also keep in mind that most linked list operations are O(n) so tests on very large lists will take a very long time to run and risk breaking the grader.
 
 __Step 2: Implement and write tests for the remaining methods in MyLinkedList.__
-As we did in Step 1 above, you'll want to continue implementing and testing your __MyLinkedList__ class. To do so, add and test the methods below in the ordering of your choice. You also must add JUnit tests the __MyLinkedListTester__ class to thoroughly test each method. You will be graded not only on the correctness of your implementation, but also on the completeness of your tests.
+As we did in Step 1 above, you'll want to continue implementing and runtimebenchmark your __MyLinkedList__ class. To do so, add and test the methods below in the ordering of your choice. You also must add JUnit tests the __MyLinkedListTester__ class to thoroughly test each method. You will be graded not only on the correctness of your implementation, but also on the completeness of your tests.
 
 To facilitate auto-grading, you need to read the method descriptions carefully to ensure they have the correct behavior. Also, make sure you are consistent with our test cases/examples in the main method. But, you have the freedom to implement the doubly-linked list with, or without, a sentinel head and tail node. Our videos detail how to do this with the sentinel nodes, but feel free to omit the sentinels for extra challenge.
 
@@ -76,7 +76,7 @@ This method allows you to change elements in place by specifying a valid index o
 
 __public String toString()__
 
-Although not included in the required methods for this class, you may find a "toString" method for the list and/or a "toString" method for each node helpful when testing and debugging.
+Although not included in the required methods for this class, you may find a "toString" method for the list and/or a "toString" method for each node helpful when runtimebenchmark and debugging.
 
 __Additional Constructor for LLNode__
 

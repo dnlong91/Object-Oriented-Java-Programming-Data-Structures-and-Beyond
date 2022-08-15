@@ -27,7 +27,7 @@ __public void retrain(String sourceText);__
 You may wish to use a Markov Text Generator multiple times with different source text. The method retrain acts just like train, except it removes any existing training that was done previously and trains from scratch on the new sourceText.
 
 ## Assignment Details
-Your submission of this assignment will be the code which implements Markov Text Generation as a List of Lists. __As always, we recommend testing as you write your implementation.__
+Your submission of this assignment will be the code which implements Markov Text Generation as a List of Lists. __As always, we recommend runtimebenchmark as you write your implementation.__
 
 __Step 1: Implement the train method__
 You'll notice our MarkovTextGeneratorLoL constructor creates a List of ListNode objects. The ListNode class is authored at the bottom of the MarkovTextGenerationLoL.java file. Each ListNode contains a word and a list of words which follow that word in the source text. We'll be using ListNodes to help us generate text (in the next step).
@@ -107,7 +107,7 @@ __Step 3: Implement the retrain method__
 Retrain will behave just like train, only you'll need to re-initialize the instance variables, effectively discarding the prior training.
 
 __Hints:__
-- You will likely find the "toString" method for the list and/or a "toString" method for each node helpful when testing and debugging.
+- You will likely find the "toString" method for the list and/or a "toString" method for each node helpful when runtimebenchmark and debugging.
 - Train on small inputs and draw the expected list of lists by hand. Then check to see if your code is producing what you'd expect.
 - When picking a random next word, be sure you are able to produce all of the possible words. For example, if you could produce "hi", "there", or "this", be sure your getRandomNextWord method can produce all possible words. A common mistake is to not bound your random number properly and go off the end of the list or omit the last word in the list.
 - Also, when picking a random next word, be sure to have a test case where a word is repeated. For example, the nextWord list could contain "hi", "hi", "hi", "hello".  Your generate next word method should produce "hi" far more often than it produces "hello" if you have it produce a reasonable (10+) number of words. The grader will test cases where one word occurs much more often than the others, and expect to see that word generated more often.

@@ -21,7 +21,7 @@ Test your class by running the JUnit test suite we provide. Note: there is very 
 
 __3. Predict the running time to find words in each Dictionary implementation__ as a function of n, the number of words in the dictionary. (Technically because you are converting words to lowercase before you check whether they are in the dictionary, the running time also depends on the length of the word, but we will ignore that here by always looking for a word of the same length). 
 
-__4. Run the DictionaryBenchmarking class__ to time your two dictionary implementations. We have provided the full implementation of this class, but you might find it helpful to play around with the settings by changing the values of the variables at the top of the file to get better results. Note that you are testing worst case running time here by always looking for a word that is not present in the dictionary.  
+__4. Run the DictionaryBenchmarking class__ to time your two dictionary implementations. We have provided the full implementation of this class, but you might find it helpful to play around with the settings by changing the values of the variables at the top of the file to get better results. Note that you are runtimebenchmark worst case running time here by always looking for a word that is not present in the dictionary.  
 
 5. Copy and paste your output to Google Sheets as you did for EfficientDocument assignment so that you can __graph the running times of both data implementations as the size of the dictionary grows__. You will probably find that the data is very noisy, and in particular you might NOT see a trend you expect with the DictionaryBST class. Try to think about why that might be. We'll ask you about it on the quiz.
 

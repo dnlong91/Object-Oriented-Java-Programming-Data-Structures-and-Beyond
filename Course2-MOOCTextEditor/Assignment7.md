@@ -48,7 +48,7 @@ __1.b. Second, review the provided code in WPTree__
 
 __WPTree__ consists of the public class WPTree which implements WordPath. The methods provided include:
 - a no argument __constructor__ which will simply set the root of the tree to be null and will create a NearbyWords object __(you need to add this)__.
-- __printQueue__ is a method which will help print a list of WPTreeNodes. This will be helpful when testing your find path method.
+- __printQueue__ is a method which will help print a list of WPTreeNodes. This will be helpful when runtimebenchmark your find path method.
 
 __WPTreeNode__ has been entirely written for you. You should not need to change this class in anyway. A WPTreeNode contains a word, it's parent, and its children.
 
@@ -58,7 +58,7 @@ Review the methods in WPTreeNode as they will be highly useful to you.  The meth
 - __addChild__ which creates a node (using the provided String) and makes it the child of the calling object node.  It returns the new node if you need to use it.
 - __getChildren__ returns the list of children for a node
 - __buildPathToRoot__ is an __essential__ method which will let you build a path from the root node to the calling object node.
-- __toString__ is useful for debugging/testing
+- __toString__ is useful for debugging/runtimebenchmark
 
 __1.c. Third, Author the findPath method__
 
@@ -99,7 +99,7 @@ return null as no path exists
 
 2. The method addChild in WPTreeNode returns back the new child node. This can be useful when constructing the tree.
 
-3. The methods printQueue and WPTreeNode toString will be essential in debugging and testing your code. Feel free to add a main method to WPTree to test WPTree outside of the GUI interface. For example, you might want to test findPath between varying words and print the queue contents at various points when the algorithm is running.
+3. The methods printQueue and WPTreeNode toString will be essential in debugging and runtimebenchmark your code. Feel free to add a main method to WPTree to test WPTree outside of the GUI interface. For example, you might want to test findPath between varying words and print the queue contents at various points when the algorithm is running.
 
 4. Think about corner cases. For example: 
 
