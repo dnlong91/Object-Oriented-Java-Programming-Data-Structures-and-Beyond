@@ -15,7 +15,7 @@ public abstract class FlowGraph {
     int a;
     int b;
     HashMap<Integer, HashSet<Integer>> vertices;
-    HashMap<Integer, HashSet<Integer>> affects;
+    HashMap<Integer, HashSet<Integer>> affects; // Map a node to all of its neighbors that may be affected by it
 
     public FlowGraph(HashSet<Integer> init, int rewardA, int rewardB) {
         currGeneration = new HashSet<Integer>();
